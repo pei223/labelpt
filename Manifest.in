@@ -1,0 +1,2 @@
+include labelpt/web/build/*
+include labelpt/web/build/static/*

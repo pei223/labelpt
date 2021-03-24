@@ -1,0 +1,15 @@
+@startuml{sequence.png}
+participant Eel
+participant Pages
+participant Context
+participant Reducer
+participant State
+
+Pages --> State: Stateを参照して画面作成
+Pages -> Context: dispatch, state = useContext()
+Pages -> Eel: ラベル一覧をファイルから取得
+Eel -> Eel: ファイルを選択して読み込む
+Eel --> Pages
+Pages ->> Reducer: dispatch(actions.setLabel(ラベル一覧))
+Reducer -> State: ラベル一覧をstateにsetして状態更新
+@enduml

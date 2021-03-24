@@ -1,0 +1,8 @@
+.filerow {
+  cursor: pointer;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid gainsboro;
+  word-wrap: break-word;
+}

@@ -1,0 +1,91 @@
+@startuml{basic.jpg}
+package "components" {
+  card templates [
+  templates
+  ----
+  1画面全体のレイアウト
+  ロジックを持たない
+  ]
+  card organisms [
+  organisms
+  ----
+  componentとして
+  完結するもの
+  ]
+  card molecules [
+  molecules
+  ----
+  Atomsを束ねる +
+  ユーザーの関心ごと単位
+  ]
+  card atoms [
+  atoms
+  ----
+  これ以上分割できない
+  component単位
+  ]
+}
+note left of components: storybookでレイアウトを見れるようにする
+
+
+package "store" {
+  package "context" {
+    card state [
+    state
+    ----
+    アプリ全域の状態
+    ]
+    card dispatch [
+    dispatch
+    ----
+    actionsをreducerに
+    渡して状態更新をする
+    ]
+  }
+
+  card actions [
+  actions
+  ----
+  状態更新request
+  ]
+  card reducer [
+  reducer
+  ----
+  actionを用いて
+  state更新処理
+  ]
+
+  dispatch -down-> actions: pagesは\ndispatch(action)で\n状態更新を行う
+  dispatch -down-> reducer: reducerに\nactionを渡す
+  reducer -left-> actions: action情報を用いて\nstate更新処理
+}
+
+
+card pages [
+pages
+----
+画面component
+templateにロジックを実装
+]
+
+card interface [
+interface
+----
+ドメインオブジェクト
+全域から参照される
+]
+
+card Eel [
+Eel
+----
+Pythonでやりたい処理
+]
+
+pages -down-> templates: Templatesに\n処理を実装
+pages -down-> context: useContextで\nアプリ全域から\ndispatch, stateを\n取得可能
+pages -up-> Eel
+store -up-> interface
+components -up-> interface
+pages -up-> interface
+
+@enduml
