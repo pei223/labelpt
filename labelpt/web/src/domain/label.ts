@@ -11,6 +11,10 @@ export default class Label {
     this.name = name
   }
 
+  static backgroundLabel() {
+    return new Label(0, "background")
+  }
+
   getBrightRGBString(): string {
     const RGB = colorPalette[this.index]
     return `rgba(${RGB[0] + 40}, ${RGB[1] + 40}, ${RGB[2] + 40}, 0.9)`

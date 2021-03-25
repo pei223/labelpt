@@ -9,6 +9,7 @@ import { setAnnotationsPath, setFilePathList, setLabelList } from './store/actio
 import FilePathWrapper from './domain/filepath_wrapper';
 import { eel } from './eel';
 import Label from './domain/label';
+import { errorLog, log } from './utils/logger';
 
 
 function App() {
@@ -25,23 +26,23 @@ function App() {
   const onOpenAnnotationsClick = async () => {
     const annotationsFilepath: string | null = await eel.choose_annotation_directory()()
     if (annotationsFilepath === null || annotationsFilepath === undefined) {
-      console.error("no annotations filepath")
+      errorLog("no annotations filepath")
       // TODO Error dialog
       return
     }
-    console.log(annotationsFilepath)
+    log(annotationsFilepath)
     dispatch(setAnnotationsPath(new FilePathWrapper(annotationsFilepath)))
   }
 
   const onLoadLabelClick = async () => {
     const labelList: string[] = await eel.load_labels_from_file()()
     if (labelList === null || labelList === undefined) {
-      console.error("no label list")
+      errorLog("no annotations filepath")
       // TODO Error dialog
       return
     }
     labelList.splice(0, 0, "background")
-    console.log(labelList)
+    log(labelList)
     const labelInfoList: Label[] = labelList.map((labelname: string, index: number) => (new Label(index, labelname)))
     dispatch(setLabelList(labelInfoList))
   }
@@ -49,7 +50,7 @@ function App() {
   const onSaveLabelClick = async () => {
     const result: boolean | null = await eel.save_labels_to_file(state.labelList)()
     if (result === null || result === undefined) {
-      console.error("Save label response is null or undefined: " + result)
+      errorLog("Save label response is null or undefined: " + result)
       // TODO Error dialog
       return
     }

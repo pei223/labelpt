@@ -25,6 +25,6 @@ export const initialState: AppState = {
     filePathList: [],
     selectedFilePathIndex: NO_INDEX,
     saveAnnotationsPath: null,
-    labelList: [new Label(0, "background")],
+    labelList: [Label.backgroundLabel()],
     selectedLabelIndex: NO_INDEX
 }

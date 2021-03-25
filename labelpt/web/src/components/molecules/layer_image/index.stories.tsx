@@ -1,15 +1,16 @@
 import React from "react"
 import { storiesOf } from '@storybook/react';
-import Image from ".";
+import LayerImage from "./index";
 import { number, text } from "@storybook/addon-knobs";
+import { AnnotationManager } from "../../../domain/annotation_manager";
 
 
-storiesOf('Image', module)
+storiesOf('LayerImage', module)
   .add('default', () => (
-    <Image imageInfo={{
+    <LayerImage imageInfo={{
       fileName: text("file name", "test.jpg"),
       imageSrc: text("image url", "https://tadworks.jp/wp-content/uploads/2020/08/profile_icon.png"),
       width: number("width", 400),
       height: number("height", 400),
-    }} zoomRate={number("zoom rate", 100)} />
+    }} annotationManager={new AnnotationManager(400, 400)} />
   ))

@@ -13,7 +13,7 @@ export type FilePathListProps = {
 
 const FilePathList = ({ filePathList, onClick, height = "500px", selectedIndex }: FilePathListProps) => {
   const filePathRows = filePathList.map((filepath: FilePathWrapper, index: number) => (
-    <FileRow index={index} filePathWrapper={filepath} onClicked={onClick} selected={selectedIndex === index} />
+    <FileRow key={index} index={index} filePathWrapper={filepath} onClicked={onClick} selected={selectedIndex === index} />
   ))
   return (
     <Paper style={{ "padding": "10px" }}>

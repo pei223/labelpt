@@ -1,19 +1,17 @@
 import { useContext, useEffect, useState } from "react"
-import { ImageInfo, ImageProps } from "../../components/molecules/image"
+import { ImageInfo } from "../../components/molecules/layer_image"
 import { FilePathListProps } from "../../components/molecules/filepath_list"
 import SegmentationTemplate from "../../components/templates/segmentation"
 import { eel } from "../../eel"
 import FilePathWrapper from "../../domain/filepath_wrapper"
 import { setSelectedFile, setSelectedLabel } from "../../store/actions"
 import { AppContext, NO_INDEX } from "../../store/stores"
-import Label from "../../domain/label"
-import { LabelListProps } from "../../components/molecules/label_list"
+import { CanvasAreaProps, InnerCanvasAreaProps } from "../../components/organisms/canvas_area"
 
 
 
 export const SegmentationPage = () => {
     const { state, dispatch } = useContext(AppContext)
-
     const [imageInfo, setImageInfo] = useState<ImageInfo>({
         fileName: "No image",
         imageSrc: null,
@@ -28,15 +26,6 @@ export const SegmentationPage = () => {
         onClick: onFileRowClick,
         filePathList: state.filePathList,
         selectedIndex: state.selectedFilePathIndex
-    }
-
-    const onLabelClick = (label: Label) => {
-        dispatch(setSelectedLabel(label.index))
-    }
-    const labelListProps: LabelListProps = {
-        onClick: onLabelClick,
-        labelList: state.labelList,
-        selectedIndex: state.selectedLabelIndex
     }
 
     // 選択されたファイルインデックスにフック
@@ -54,15 +43,14 @@ export const SegmentationPage = () => {
             }))
     }, [state.selectedFilePathIndex])
 
-    const imageProps: ImageProps = {
+    const canvasAreaProps: CanvasAreaProps = {
         imageInfo: imageInfo,
-        zoomRate: 100
+        labelList: state.labelList
     }
 
     return (
         <SegmentationTemplate
             filepathListProps={filepathListProps}
-            labelListProps={labelListProps}
-            imageProps={imageProps} />
+            canvasAreaProps={canvasAreaProps} />
     )
 }

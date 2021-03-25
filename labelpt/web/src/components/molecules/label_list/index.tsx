@@ -13,7 +13,7 @@ export type LabelListProps = {
 
 const LabelList = ({ onClick, labelList, height = "500px", selectedIndex }: LabelListProps) => {
   const labelRows = labelList.map((labelInfo: Label) => (
-    <Grid item xs={6}>
+    <Grid key={labelInfo.index} item xs={6}>
       <LabelItem labelInfo={labelInfo} onClick={onClick} selected={labelInfo.index === selectedIndex} />
     </Grid>
   ))

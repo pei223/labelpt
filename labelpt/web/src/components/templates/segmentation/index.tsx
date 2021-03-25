@@ -1,25 +1,24 @@
 import { Grid } from '@material-ui/core';
 import React from 'react'
+import { log } from '../../../utils/logger';
 import FilePathList, { FilePathListProps } from '../../molecules/filepath_list';
-import Image, { ImageProps } from '../../molecules/image';
-import LabelList, { LabelListProps } from '../../molecules/label_list';
+import CanvasArea, { CanvasAreaProps } from '../../organisms/canvas_area';
 
 type Props = {
   filepathListProps: FilePathListProps
-  labelListProps: LabelListProps
-  imageProps: ImageProps
+  canvasAreaProps: CanvasAreaProps
 }
 
-const SegmentationTemplate = ({ filepathListProps, labelListProps, imageProps }: Props) => {
+const SegmentationTemplate = ({ filepathListProps, canvasAreaProps }: Props) => {
+  log("Render on SegmentationTemplate")
+  // TODO レイアウトおかしい. 後で修正
   return (
     <div>
       <Grid container spacing={3}>
-        <Grid item xs={9}>
-          <Image {...imageProps} />
+        <Grid item xs={12}>
+          <CanvasArea {...canvasAreaProps} />
         </Grid>
         <Grid item xs={3}>
-          <LabelList {...labelListProps} height="300px" />
-          <p style={{marginTop: "10px"}}></p>
           <FilePathList {...filepathListProps} />
         </Grid>
       </Grid>
