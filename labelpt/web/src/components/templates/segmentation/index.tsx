@@ -15,12 +15,9 @@ const SegmentationTemplate = ({ filepathListProps, canvasAreaProps }: Props) => 
   return (
     <div>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <CanvasArea {...canvasAreaProps} />
-        </Grid>
-        <Grid item xs={3}>
+        <CanvasArea {...canvasAreaProps}>
           <FilePathList {...filepathListProps} />
-        </Grid>
+        </CanvasArea>
       </Grid>
     </div>
   )
