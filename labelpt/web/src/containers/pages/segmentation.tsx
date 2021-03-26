@@ -4,9 +4,9 @@ import { FilePathListProps } from "../../components/molecules/filepath_list"
 import SegmentationTemplate from "../../components/templates/segmentation"
 import { eel } from "../../eel"
 import FilePathWrapper from "../../domain/filepath_wrapper"
-import { setSelectedFile, setSelectedLabel } from "../../store/actions"
+import { setSelectedFile } from "../../store/actions"
 import { AppContext, NO_INDEX } from "../../store/stores"
-import { CanvasAreaProps, InnerCanvasAreaProps } from "../../components/organisms/canvas_area"
+import { CanvasAreaProps } from "../../components/organisms/canvas_area"
 
 
 

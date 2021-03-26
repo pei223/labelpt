@@ -24,7 +24,8 @@ npm run storybook
 
 ## Run
 ```
-npm run build
+// for web frontend
+npm run dev-build
 // Fix build/index.html /static/~ -> ./static/~
 python run.py
 ```
@@ -32,7 +33,7 @@ python run.py
 ## Build
 ```
 // for web frontend
-reference to web/README.md
+npm run prod-build
 // for python
 python -m eel labelcls/run.py labelpt/web --onefile --noconsole
 ```

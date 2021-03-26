@@ -7,7 +7,7 @@ import LayerImage, { ImageInfo } from "../../molecules/layer_image"
 import { Grid } from "@material-ui/core"
 
 export type CanvasAreaProps = {
-  children: React.ReactChild,
+  children?: React.ReactChild,
   imageInfo: ImageInfo,
   labelList: Label[],
 }
