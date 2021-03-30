@@ -14,17 +14,25 @@ export type FilePathFieldProps = {
 
 const FilePathField = ({ color = "#303f9f", label = "file path", fieldWidth = "200px", filePath, onChange, onButtonClick }: FilePathFieldProps) => {
   log("Render on FilePathField")
+
+  const isError = () => {
+    return filePath === ""
+  }
+
   return (
     <>
-      <TextField type="text" margin="none" label={label}
+      <TextField
+        error={isError()}
+        margin="none"
+        type="text" label={label}
         defaultValue={filePath}
         onChange={(e) => { onChange(e.target.value) }} value={filePath}
-        style={{ color: color, verticalAlign: "bottom", width: fieldWidth }} />
+        style={{ color: color, verticalAlign: "top", width: fieldWidth }} />
       <Button
         size="small"
         onClick={(e) => onButtonClick(filePath)} style={{
           backgroundColor: color,
-          // verticalAlign: "center",
+          verticalAlign: "bottom",
           paddingLeft: "10px", paddingRight: "10px",
           minWidth: "0px"
         }}>

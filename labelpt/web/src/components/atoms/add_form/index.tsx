@@ -1,7 +1,6 @@
-import { Divider, Fab, ListItem, ListItemText } from '@material-ui/core';
-import { AddCircle } from '@material-ui/icons';
+import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { IconButton, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 
 type Props = {
@@ -10,11 +9,19 @@ type Props = {
   onSubmit: (labelName: string) => void
 }
 
+
 const AddForm = ({ color = "#303f9f", textFieldWidth: width = "150px", onSubmit }: Props) => {
   const [labelName, setLabelName] = useState("")
+
+  const isError = () => {
+    return labelName === ""
+  }
   return (
     <>
-      <TextField type="text" margin="normal" onChange={(e) => setLabelName(e.target.value)} style={{ color: color, width: width }} />
+      <TextField
+        error={isError()}
+        helperText={isError() ? "Must not be empty" : ""}
+        type="text" margin="normal" onChange={(e) => setLabelName(e.target.value)} style={{ color: color, width: width }} />
       <Fab onClick={() => { onSubmit(labelName); setLabelName("") }} style={{ backgroundColor: color }} size="small" >
         <AddIcon style={{ color: "white" }} />
       </Fab>
