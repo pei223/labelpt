@@ -19,6 +19,10 @@ export default class Label {
     const RGB = colorPalette[this.index]
     return `rgba(${RGB[0] + 40}, ${RGB[1] + 40}, ${RGB[2] + 40}, 0.9)`
   }
+
+  grantLabelIndex(index: number): Label {
+    return new Label(index, this.name)
+  }
 }
 
 const colorPalette: number[][] = [

@@ -6,15 +6,16 @@ import React, { useState } from 'react';
 
 type Props = {
   color?: string
+  textFieldWidth?: string
   onSubmit: (labelName: string) => void
 }
 
-const AddForm = ({ color = "#303f9f", onSubmit }: Props) => {
+const AddForm = ({ color = "#303f9f", textFieldWidth: width = "150px", onSubmit }: Props) => {
   const [labelName, setLabelName] = useState("")
   return (
     <>
-      <TextField type="text" margin="normal" onChange={(e) => setLabelName(e.target.value)} style={{ color: color }} />
-      <Fab onClick={() => onSubmit(labelName)} style={{ backgroundColor: color }} size="small" >
+      <TextField type="text" margin="normal" onChange={(e) => setLabelName(e.target.value)} style={{ color: color, width: width }} />
+      <Fab onClick={() => { onSubmit(labelName); setLabelName("") }} style={{ backgroundColor: color }} size="small" >
         <AddIcon style={{ color: "white" }} />
       </Fab>
     </>

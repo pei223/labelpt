@@ -13,7 +13,7 @@ export type CanvasAreaProps = {
 }
 
 export type InnerCanvasAreaProps = {
-  children: React.ReactChild,
+  children?: React.ReactChild,
   imageInfo: ImageInfo,
   labelList: Label[],
   annotationManager: AnnotationManager

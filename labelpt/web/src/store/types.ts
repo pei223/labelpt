@@ -4,9 +4,11 @@ import { ActionType } from "./reducer"
 
 export const SET_FILEPATH_LIST = "SET_FILEPATH_LIST"
 export const SET_SELECTED_FILE = "SET_SELECTED_FILE"
+export const ADD_LABEL = "ADD_LABEL"
 export const SET_LABEL_LIST = "SET_LABEL_LIST"
 export const SET_SELECTED_LABEL = "SET_SELECTED_LABEL"
 export const SET_ANNOTATIONS_PATH = "SET_ANNOTATIONS_PATH"
+export const SET_DIRECTORIES_PATH = "SET_DIRECTORIES_PATH"
 
 
 export interface SetFilePathListAction extends ActionType<FilePathWrapper[]> {
@@ -17,6 +19,11 @@ export interface SetFilePathListAction extends ActionType<FilePathWrapper[]> {
 export interface SetSelectedFileAction extends ActionType<number> {
   type: string;
   payload: number
+}
+
+export interface AddLabelAction extends ActionType<string> {
+  type: string
+  payload: string
 }
 
 export interface SetSelectedIndexAction extends ActionType<number> {
@@ -32,4 +39,15 @@ export interface SetLabelListAction extends ActionType<Label[]> {
 export interface SetAnnotationsPathAction extends ActionType<FilePathWrapper> {
   type: string
   payload: FilePathWrapper
+}
+
+export interface InitialSetting {
+  initialSettingFinished: boolean
+  imagesPath: FilePathWrapper
+  annotationPath: FilePathWrapper
+}
+
+export interface SetInitialSetingAction extends ActionType<InitialSetting> {
+  type: string
+  payload: InitialSetting
 }

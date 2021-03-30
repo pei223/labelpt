@@ -11,12 +11,11 @@ type Props = {
 
 const SegmentationTemplate = ({ filepathListProps, canvasAreaProps }: Props) => {
   log("Render on SegmentationTemplate")
-  // TODO レイアウトおかしい. 後で修正
   return (
     <div>
       <Grid container spacing={3}>
         <CanvasArea {...canvasAreaProps}>
-          <FilePathList {...filepathListProps} />
+          <FilePathList {...filepathListProps} height="400px" />
         </CanvasArea>
       </Grid>
     </div>

@@ -8,10 +8,6 @@ from PIL import Image
 import base64
 from io import BytesIO
 
-root = Tk()
-root.attributes('-topmost', True)
-root.withdraw()
-
 
 @eel.expose
 def load_jpeg_image_and_width_height(filepath: str) -> Optional[Tuple[str, int, int]]:
@@ -68,6 +64,7 @@ def load_labels_from_file() -> List[str]:
 
 @eel.expose
 def save_labels_to_file(labels: Optional[List[str]]) -> bool:
+    print("aaa")
     filepath = filedialog.asksaveasfile(filetype=[("テキストファイル", "*.txt")])
     if filepath is None:
         return False
@@ -76,3 +73,8 @@ def save_labels_to_file(labels: Optional[List[str]]) -> bool:
         for line in labels:
             file.write(f"{line}\n")
     return True
+
+
+@eel.expose
+def is_directory_path_exist(dir_path: str):
+    return Path(dir_path).exists()

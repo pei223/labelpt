@@ -1,9 +1,7 @@
-
-
 export const log = (text: any): void => {
-  if (!process.env.DEBUG) {
-    return
-  }
+  // if (!process.env.DEBUG) {
+  //   return
+  // }
   console.log(text)
 }
 

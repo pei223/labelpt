@@ -6,12 +6,17 @@ import {
   SET_SELECTED_FILE,
   SET_LABEL_LIST,
   SET_SELECTED_LABEL,
+  SET_ANNOTATIONS_PATH,
+  ADD_LABEL,
+  SET_DIRECTORIES_PATH,
   SetFilePathListAction,
   SetSelectedFileAction,
   SetSelectedIndexAction,
   SetLabelListAction,
   SetAnnotationsPathAction,
-  SET_ANNOTATIONS_PATH
+  AddLabelAction,
+  InitialSetting,
+  SetInitialSetingAction,
 } from "./types";
 
 
@@ -30,6 +35,13 @@ export const setSelectedFile = (index: number): SetSelectedFileAction => {
   return {
     type: SET_SELECTED_FILE,
     payload: index
+  }
+}
+
+export const addLabelAction = (labelName: string): AddLabelAction => {
+  return {
+    type: ADD_LABEL,
+    payload: labelName,
   }
 }
 
@@ -57,5 +69,12 @@ export const setAnnotationsPath = (filePath: FilePathWrapper): SetAnnotationsPat
   return {
     type: SET_ANNOTATIONS_PATH,
     payload: filePath
+  }
+}
+
+export const setInitialSettingValue = (initialSetting: InitialSetting): SetInitialSetingAction => {
+  return {
+    type: SET_DIRECTORIES_PATH,
+    payload: initialSetting
   }
 }

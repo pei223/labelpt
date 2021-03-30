@@ -16,8 +16,10 @@ export interface AppState {
     filePathList: FilePathWrapper[]
     selectedFilePathIndex: number
     saveAnnotationsPath: FilePathWrapper | null,
-    labelList: Label[]
-    selectedLabelIndex: number
+    imagesPath: FilePathWrapper | null,
+    labelList: Label[],
+    selectedLabelIndex: number,
+    initialSettingFinished: boolean
 }
 
 export const initialState: AppState = {
@@ -25,6 +27,8 @@ export const initialState: AppState = {
     filePathList: [],
     selectedFilePathIndex: NO_INDEX,
     saveAnnotationsPath: null,
+    imagesPath: null,
     labelList: [Label.backgroundLabel()],
-    selectedLabelIndex: NO_INDEX
+    selectedLabelIndex: NO_INDEX,
+    initialSettingFinished: false
 }

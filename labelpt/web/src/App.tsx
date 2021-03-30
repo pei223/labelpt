@@ -10,6 +10,7 @@ import FilePathWrapper from './domain/filepath_wrapper';
 import { eel } from './eel';
 import Label from './domain/label';
 import { errorLog, log } from './utils/logger';
+import { InitialSettingPage } from './containers/pages/initial_setting';
 
 
 function App() {
@@ -57,8 +58,8 @@ function App() {
     // TODO 成功モーダル
   }
 
-  return (
-    <AppContext.Provider value={{ state, dispatch }}>
+  const annotationPage = (
+    <div className="root-container">
       <AppFrame
         onOpenImagesClick={onImagesOpenClick}
         onOpenAnnotationsClick={onOpenAnnotationsClick}
@@ -68,6 +69,18 @@ function App() {
           <Route exact path="/index.html" component={SegmentationPage}></Route>
         </Router>
       </AppFrame>
+    </div>
+  )
+
+  const initialSettingPage = (
+    <div className="initial-setting-container">
+      <InitialSettingPage />
+    </div>
+  )
+
+  return (
+    <AppContext.Provider value={{ state, dispatch }}>
+      {state.initialSettingFinished ? annotationPage : initialSettingPage}
     </AppContext.Provider>
   );
 }
