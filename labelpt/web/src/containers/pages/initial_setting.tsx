@@ -9,7 +9,6 @@ import FilePathWrapper from "../../domain/filepath_wrapper"
 import { InfoModalProps } from "../../components/molecules/info_modal"
 
 
-
 export const InitialSettingPage = () => {
   const { state, dispatch } = useContext(AppContext)
   const [imagesPath, setImagesPath] = useState("")
@@ -65,7 +64,7 @@ export const InitialSettingPage = () => {
   }
 
   const onImagesPathChooseClick = async () => {
-    const filePath: string | null = await eel.choose_annotation_directory()()
+    const filePath: string | null = await eel.choose_directory()()
     if (filePath === null) {
       return
     }
@@ -74,7 +73,7 @@ export const InitialSettingPage = () => {
   }
 
   const onAnnotationPathChooseClick = async () => {
-    const filePath: string | null = await eel.choose_annotation_directory()()
+    const filePath: string | null = await eel.choose_directory()()
     if (filePath === null) {
       return
     }

@@ -2,7 +2,6 @@ import React from "react"
 import { storiesOf } from '@storybook/react';
 import { action } from "@storybook/addon-actions";
 import SegmentationTemplate from ".";
-import { FilePathListProps } from "../../molecules/filepath_list";
 import FilePathWrapper from "../../../domain/filepath_wrapper";
 import Label from "../../../domain/label";
 import { CanvasAreaProps } from "../../organisms/canvas_area";
@@ -15,13 +14,6 @@ const filepathList = [
   new FilePathWrapper("dasklfj;dsa/fdjaslkf;/eee.png"),
   new FilePathWrapper("dasklfj;dsa/fdjaslkf;/eee.png"),
 ]
-
-const filepathProps: FilePathListProps = {
-  onClick: onFileClick,
-  filePathList: filepathList,
-  height: "400px",
-  selectedIndex: 1
-}
 
 const canvasAreaProps: CanvasAreaProps = {
   imageInfo: {
@@ -43,6 +35,8 @@ const canvasAreaProps: CanvasAreaProps = {
 storiesOf('SegmentationTemplate', module)
   .add('default', () => (
     <SegmentationTemplate
-      filepathListProps={filepathProps}
+      onFileClick={onFileClick}
+      filePathList={filepathList}
+      selectedFileIndex={1}
       canvasAreaProps={canvasAreaProps} />
   ))

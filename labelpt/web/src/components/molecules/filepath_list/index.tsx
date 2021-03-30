@@ -3,6 +3,7 @@ import SubHeading from '../../atoms/sub_heading';
 import { Divider, Paper } from '@material-ui/core';
 import FilePathWrapper from '../../../domain/filepath_wrapper';
 import FileRow from '../../atoms/file_row';
+import { log } from '../../../utils/logger';
 
 export type FilePathListProps = {
   filePathList: FilePathWrapper[];
@@ -12,6 +13,7 @@ export type FilePathListProps = {
 }
 
 const FilePathList = ({ filePathList, onClick, height = "500px", selectedIndex }: FilePathListProps) => {
+  log("Render on FilePathList")
   const filePathRows = filePathList.map((filepath: FilePathWrapper, index: number) => (
     <FileRow key={index} index={index} filePathWrapper={filepath} onClicked={onClick} selected={selectedIndex === index} />
   ))
