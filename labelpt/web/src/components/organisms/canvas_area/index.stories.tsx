@@ -22,7 +22,7 @@ const canvasAreaProps: CanvasAreaProps = {
   ]
 }
 
-storiesOf('CanvasArea', module)
+storiesOf('organisms/CanvasArea', module)
   .add('default', () => (
     <CanvasArea {...canvasAreaProps} />
   ))

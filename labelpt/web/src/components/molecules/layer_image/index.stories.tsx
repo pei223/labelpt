@@ -5,7 +5,7 @@ import { number, text } from "@storybook/addon-knobs";
 import { AnnotationManager } from "../../../domain/annotation_manager";
 
 
-storiesOf('LayerImage', module)
+storiesOf('molecules/LayerImage', module)
   .add('default', () => (
     <LayerImage imageInfo={{
       fileName: text("file name", "test.jpg"),

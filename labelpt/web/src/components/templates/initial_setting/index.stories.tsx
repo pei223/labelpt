@@ -19,7 +19,7 @@ const onLabelAdded = (labelName: string) => {
   labelList.push(new Label(labelList.length + 1, labelName))
 }
 
-storiesOf('InitialSettingTemplate', module)
+storiesOf('templates/InitialSettingTemplate', module)
   .add('default', () => (
     <InitialSettingTemplate
       imagesPath={text("images path", "test/hoge/aaa")}

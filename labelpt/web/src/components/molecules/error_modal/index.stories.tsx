@@ -5,7 +5,7 @@ import ErrorModal from "./index";
 
 
 
-storiesOf('ErrorModal', module)
+storiesOf('molecules/ErrorModal', module)
   .add('default', () => (
     <ErrorModal
       title={text("title", "title")}

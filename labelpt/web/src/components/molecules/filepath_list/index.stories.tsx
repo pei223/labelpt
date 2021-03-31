@@ -13,7 +13,7 @@ const filepathLs = [
   new FilePathWrapper("test/aaa/hoge.png"),
 ]
 
-storiesOf('FilePathList', module)
+storiesOf('molecules/FilePathList', module)
   .add('default', () => (
     <FilePathList selectedIndex={number("selected index", 1)} filePathList={filepathLs} onClick={action("filepath clicked,")} listHeight="300px" />
   ))

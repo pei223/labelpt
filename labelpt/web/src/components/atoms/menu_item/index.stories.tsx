@@ -6,7 +6,7 @@ import MenuItem from './index'
 import MailIcon from '@material-ui/icons/Mail';
 import { ArrowBack } from "@material-ui/icons";
 
-storiesOf('MenuItem', module)
+storiesOf('atoms/MenuItem', module)
   .add('default', () => (
     <MenuItem iconComponent={<MailIcon />} 
       title={text("title", "test menu")}

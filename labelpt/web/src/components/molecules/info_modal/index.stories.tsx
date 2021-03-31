@@ -5,7 +5,7 @@ import InfoModal from "./index";
 
 
 
-storiesOf('InfoModal', module)
+storiesOf('molecules/InfoModal', module)
   .add('default', () => (
     <InfoModal
       title={text("title", "title")}

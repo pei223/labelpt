@@ -6,7 +6,7 @@ import FileRow from './index'
 import FilePathWrapper from "../../../domain/filepath_wrapper";
 
 
-storiesOf('FileRow', module)
+storiesOf('atoms/FileRow', module)
   .add('default', () => (
     <FileRow
       selected={false}

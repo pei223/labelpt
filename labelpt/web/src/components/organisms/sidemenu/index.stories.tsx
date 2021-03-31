@@ -4,7 +4,7 @@ import { action } from "@storybook/addon-actions";
 import SideMenu from ".";
 import { boolean } from "@storybook/addon-knobs";
 
-storiesOf('Sidebar', module)
+storiesOf('organisms/Sidebar', module)
   .add('default', () => (
     <SideMenu
       open={boolean("toggle", true)}

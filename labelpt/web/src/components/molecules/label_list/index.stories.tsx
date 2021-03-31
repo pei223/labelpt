@@ -6,7 +6,7 @@ import { number } from "@storybook/addon-knobs";
 import Label from "../../../domain/label";
 
 
-storiesOf('LabelList', module)
+storiesOf('molecules/LabelList', module)
   .add('default', () => (
     <LabelList
       selectedIndex={number("selected index", 2)}

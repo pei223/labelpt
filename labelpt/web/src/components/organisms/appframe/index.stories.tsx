@@ -4,7 +4,7 @@ import AppFrame from ".";
 import { action } from "@storybook/addon-actions";
 
 
-storiesOf('AppFrame', module)
+storiesOf('organisms/AppFrame', module)
   .add('default', () => (
     <AppFrame
       onOpenImagesClick={action("images clicked")}

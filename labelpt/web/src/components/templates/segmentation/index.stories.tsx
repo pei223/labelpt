@@ -32,7 +32,7 @@ const canvasAreaProps: CanvasAreaProps = {
   ]
 }
 
-storiesOf('SegmentationTemplate', module)
+storiesOf('templates/SegmentationTemplate', module)
   .add('default', () => (
     <SegmentationTemplate
       onFileClick={onFileClick}

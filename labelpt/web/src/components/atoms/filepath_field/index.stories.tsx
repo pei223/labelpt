@@ -16,7 +16,7 @@ const Wrapper = () => {
   )
 }
 
-storiesOf('FilePathField', module)
+storiesOf('atoms/FilePathField', module)
   .add('default', () => (
     <Wrapper />
   ))
