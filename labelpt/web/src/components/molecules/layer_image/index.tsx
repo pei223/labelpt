@@ -13,6 +13,7 @@ export interface ImageInfo {
 
 export type ImageProps = {
   imageInfo: ImageInfo
+  width?: string
   viewHeight?: string
   annotationManager: AnnotationManager
 }
@@ -21,7 +22,7 @@ const propsEquals = (props1: ImageProps, props2: ImageProps): boolean => {
   return props1.imageInfo === props2.imageInfo
 }
 
-const LayerImage = ({ imageInfo, viewHeight = "500px", annotationManager }: ImageProps) => {
+const LayerImage = ({ imageInfo, width = "70%", viewHeight = "500px", annotationManager }: ImageProps) => {
   log("Render on LayerImage")
 
   annotationManager.setSize(imageInfo.width, imageInfo.height)
@@ -56,7 +57,7 @@ const LayerImage = ({ imageInfo, viewHeight = "500px", annotationManager }: Imag
   }, [])
 
   return (
-    <Paper style={{ "padding": "15px" }}>
+    <Paper style={{ "padding": "15px", width: width }}>
       <SubHeading>{imageInfo.fileName}</SubHeading>
       <div style={{ overflow: "scroll", height: viewHeight }}>
         <div id="layer-container" style={{ padding: "20px" }}>

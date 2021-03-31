@@ -4,22 +4,29 @@ import { AnnotationManager } from "../../../domain/annotation_manager"
 import { log } from "../../../utils/logger"
 import LabelList, { LabelListProps } from "../../molecules/label_list"
 import LayerImage, { ImageInfo } from "../../molecules/layer_image"
-import { Grid } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 
 export type CanvasAreaProps = {
-  children?: React.ReactChild,
   imageInfo: ImageInfo,
   labelList: Label[],
+  canvasWidth?: string
+  canvasHeight?: string
+  labelAreaWidth?: string
+  labelListHeight?: string
 }
 
 export type InnerCanvasAreaProps = {
-  children?: React.ReactChild,
   imageInfo: ImageInfo,
   labelList: Label[],
   annotationManager: AnnotationManager
+  canvasWidth: string
+  canvasHeight: string
+  labelAreaWidth: string
+  labelAreaHeight: string
 }
 
-const InnerCanvasArea = ({ children, imageInfo, labelList, annotationManager }: InnerCanvasAreaProps) => {
+const InnerCanvasArea = ({ imageInfo, labelList, annotationManager, canvasWidth, canvasHeight,
+  labelAreaWidth, labelAreaHeight }: InnerCanvasAreaProps) => {
   const [selectedLabel, setSelectedLabel] = useState<Label>(labelList[0])
 
   const onLabelClick = (label: Label) => {
@@ -36,19 +43,12 @@ const InnerCanvasArea = ({ children, imageInfo, labelList, annotationManager }: 
   // TODO ツールボックス含めて描画エリアにする
   return (
     <>
-      <Grid item xs={9}>
-        <LayerImage imageInfo={imageInfo} annotationManager={annotationManager} />
-      </Grid>
-      <Grid item xs={3}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <LabelList {...labelListProps} height="300px" />
-          </Grid>
-          <Grid item xs={12}>
-            {children}
-          </Grid>
-        </Grid>
-      </Grid>
+      <Box p={1} css={{ height: canvasHeight, width: canvasWidth }}>
+        <LayerImage imageInfo={imageInfo} annotationManager={annotationManager} width="auto" />
+      </Box>
+      <Box p={1} css={{ width: labelAreaWidth }}>
+        <LabelList {...labelListProps} width="auto" height={labelAreaHeight} />
+      </Box>
     </>
   )
 }
@@ -57,12 +57,18 @@ const propsEqual = (props1: CanvasAreaProps, props2: CanvasAreaProps): boolean =
   return props1.imageInfo === props2.imageInfo && props1.labelList === props2.labelList
 }
 
-const CanvasArea = ({ children, imageInfo, labelList }: CanvasAreaProps) => {
+const CanvasArea = ({ imageInfo, labelList, canvasWidth = "600px", canvasHeight = "600px", labelAreaWidth = "300px", labelListHeight: labelAreaHeight = "400px" }: CanvasAreaProps) => {
   log("Render on CanvasArea")
   // annotationManagerを保持するためにmemo化してラッピングする
   const annotationManager = new AnnotationManager(imageInfo.width, imageInfo.height)
   return (
-    <InnerCanvasArea imageInfo={imageInfo} labelList={labelList} annotationManager={annotationManager} children={children} />
+    <InnerCanvasArea
+      imageInfo={imageInfo} labelList={labelList}
+      annotationManager={annotationManager}
+      canvasWidth={canvasWidth}
+      canvasHeight={canvasHeight}
+      labelAreaWidth={labelAreaWidth}
+      labelAreaHeight={labelAreaHeight} />
   )
 }
 export default React.memo(CanvasArea, propsEqual)

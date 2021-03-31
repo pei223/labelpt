@@ -8,17 +8,18 @@ import { log } from '../../../utils/logger';
 export type FilePathListProps = {
   filePathList: FilePathWrapper[];
   onClick: (filePath: FilePathWrapper, index: number) => void
-  height?: string
+  width?: string
+  listHeight?: string
   selectedIndex: number
 }
 
-const FilePathList = ({ filePathList, onClick, height = "500px", selectedIndex }: FilePathListProps) => {
+const FilePathList = ({ filePathList, onClick, width = "400px", listHeight: height = "500px", selectedIndex }: FilePathListProps) => {
   log("Render on FilePathList")
   const filePathRows = filePathList.map((filepath: FilePathWrapper, index: number) => (
     <FileRow key={index} index={index} filePathWrapper={filepath} onClicked={onClick} selected={selectedIndex === index} />
   ))
   return (
-    <Paper style={{ "padding": "10px" }}>
+    <Paper style={{ "padding": "10px", width: width }}>
       <SubHeading>Files</SubHeading>
       <Divider style={{ "marginTop": "10px" }} />
       <div style={{ overflowY: "scroll", height: height }}>

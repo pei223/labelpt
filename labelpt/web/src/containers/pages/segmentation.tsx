@@ -6,8 +6,7 @@ import FilePathWrapper from "../../domain/filepath_wrapper"
 import { setFilePathList, setSelectedFile } from "../../store/actions"
 import { AppContext, NO_INDEX } from "../../store/stores"
 import { CanvasAreaProps } from "../../components/organisms/canvas_area"
-import { log } from "../../utils/logger"
-
+import { errorLog, log } from "../../utils/logger"
 
 
 export const SegmentationPage = () => {
@@ -29,7 +28,7 @@ export const SegmentationPage = () => {
   const loadFilePathList = async () => {
     const filepathList: string[] = await eel.load_filepath_list(state.imagesPath?.filePath)()
     if (filepathList === null) {
-      log("filepathlist null")
+      errorLog("filepathlist null")
       // TODO エラーダイアログ
       return
     }
@@ -41,7 +40,9 @@ export const SegmentationPage = () => {
 
   useEffect(() => {
     log("Fetch file path list")
-    loadFilePathList()
+    loadFilePathList().then(() => {
+      dispatch(setSelectedFile(0))
+    })
   }, [])
 
 

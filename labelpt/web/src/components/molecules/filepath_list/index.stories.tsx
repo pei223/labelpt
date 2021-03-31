@@ -15,11 +15,11 @@ const filepathLs = [
 
 storiesOf('FilePathList', module)
   .add('default', () => (
-    <FilePathList selectedIndex={number("selected index", 1)} filePathList={filepathLs} onClick={action("filepath clicked,")} height="300px" />
+    <FilePathList selectedIndex={number("selected index", 1)} filePathList={filepathLs} onClick={action("filepath clicked,")} listHeight="300px" />
   ))
   .add("empty", () => (
-    <FilePathList selectedIndex={number("selected index", 1)} filePathList={[]} onClick={action("filepath clicked,")} height="300px" />
+    <FilePathList selectedIndex={number("selected index", 1)} filePathList={[]} onClick={action("filepath clicked,")} listHeight="300px" />
   ))
   .add("scroll", () => (
-    <FilePathList selectedIndex={number("selected index", 1)} filePathList={filepathLs.concat(filepathLs).concat(filepathLs).concat(filepathLs)} onClick={action("filepath clicked,")} height="300px" />
+    <FilePathList selectedIndex={number("selected index", 1)} filePathList={filepathLs.concat(filepathLs).concat(filepathLs).concat(filepathLs)} onClick={action("filepath clicked,")} listHeight="300px" />
   ))

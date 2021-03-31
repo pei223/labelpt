@@ -85,7 +85,7 @@ const InitialSettingTemplate = ({ themeColor = "#666ad1", annotationPath, onAnno
       <Grid container spacing={3} style={{ padding: "30px" }}>
         <Grid item xs={6}>
           <AddForm onSubmit={onLabelAdded} textFieldWidth="300px" />
-          <LabelList {...labelListProps} />
+          <LabelList {...labelListProps} width="100%" />
           <Grid container style={{ textAlign: "center", marginTop: "40px" }}>
             <Grid item xs={6}>
               <Button style={genButtonStyle(themeColor, "250px")} onClick={onSaveLabelClick}>Save labels</Button>

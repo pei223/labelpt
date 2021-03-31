@@ -16,13 +16,26 @@ const AddForm = ({ color = "#303f9f", textFieldWidth: width = "150px", onSubmit 
   const isError = () => {
     return labelName === ""
   }
+
+  const onPlusClick = () => {
+    if (isError()) {
+      return
+    }
+    onSubmit(labelName);
+    setLabelName("");
+  }
+
   return (
     <>
       <TextField
-        error={isError()}
-        helperText={isError() ? "Must not be empty" : ""}
+        onKeyPress={e => {
+          if (e.key === "Enter") {
+            onPlusClick()
+          }
+        }}
+        value={labelName}
         type="text" margin="normal" onChange={(e) => setLabelName(e.target.value)} style={{ color: color, width: width }} />
-      <Fab onClick={() => { onSubmit(labelName); setLabelName("") }} style={{ backgroundColor: color }} size="small" >
+      <Fab onClick={onPlusClick} style={{ backgroundColor: color }} size="small" >
         <AddIcon style={{ color: "white" }} />
       </Fab>
     </>
