@@ -7,8 +7,7 @@ export const SET_SELECTED_FILE = "SET_SELECTED_FILE"
 export const ADD_LABEL = "ADD_LABEL"
 export const SET_LABEL_LIST = "SET_LABEL_LIST"
 export const SET_SELECTED_LABEL = "SET_SELECTED_LABEL"
-export const SET_ANNOTATIONS_PATH = "SET_ANNOTATIONS_PATH"
-export const SET_DIRECTORIES_PATH = "SET_DIRECTORIES_PATH"
+export const SET_INITIAL_SETTING_RESULT = "SET_INITIAL_SETTING_RESULT"
 
 
 export interface SetFilePathListAction extends ActionType<FilePathWrapper[]> {
@@ -34,11 +33,6 @@ export interface SetSelectedIndexAction extends ActionType<number> {
 export interface SetLabelListAction extends ActionType<Label[]> {
   type: string;
   payload: Label[]
-}
-
-export interface SetAnnotationsPathAction extends ActionType<FilePathWrapper> {
-  type: string
-  payload: FilePathWrapper
 }
 
 export interface InitialSetting {

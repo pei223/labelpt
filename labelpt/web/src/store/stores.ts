@@ -2,6 +2,7 @@ import React from "react";
 import FilePathWrapper from "../domain/filepath_wrapper";
 import Label from "../domain/label";
 import { ActionType } from "./reducer";
+
 export const NO_INDEX = -1
 
 type ContextType = {

@@ -6,19 +6,16 @@ import {
   SET_SELECTED_FILE,
   SET_LABEL_LIST,
   SET_SELECTED_LABEL,
-  SET_ANNOTATIONS_PATH,
   ADD_LABEL,
-  SET_DIRECTORIES_PATH,
+  SET_INITIAL_SETTING_RESULT,
   SetFilePathListAction,
   SetSelectedFileAction,
   SetSelectedIndexAction,
   SetLabelListAction,
-  SetAnnotationsPathAction,
   AddLabelAction,
   InitialSetting,
   SetInitialSetingAction,
 } from "./types";
-
 
 
 export const setFilePathList = (filepathList: FilePathWrapper[]): SetFilePathListAction => {
@@ -65,16 +62,9 @@ export const setLabelList = (labelList: Label[]): SetLabelListAction => {
   }
 }
 
-export const setAnnotationsPath = (filePath: FilePathWrapper): SetAnnotationsPathAction => {
-  return {
-    type: SET_ANNOTATIONS_PATH,
-    payload: filePath
-  }
-}
-
 export const setInitialSettingValue = (initialSetting: InitialSetting): SetInitialSetingAction => {
   return {
-    type: SET_DIRECTORIES_PATH,
+    type: SET_INITIAL_SETTING_RESULT,
     payload: initialSetting
   }
 }

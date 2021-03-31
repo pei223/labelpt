@@ -5,9 +5,8 @@ import {
     SET_SELECTED_FILE,
     SET_SELECTED_LABEL,
     SET_LABEL_LIST,
-    SET_ANNOTATIONS_PATH,
     ADD_LABEL,
-    SET_DIRECTORIES_PATH
+    SET_INITIAL_SETTING_RESULT
 } from "./types"
 
 
@@ -35,9 +34,7 @@ export const Reducer = (state: AppState, action: ActionType): AppState => {
                 return state
             }
             return { ...state, selectedLabelIndex: action.payload }
-        case SET_ANNOTATIONS_PATH:
-            return { ...state, saveAnnotationsPath: action.payload }
-        case SET_DIRECTORIES_PATH:
+        case SET_INITIAL_SETTING_RESULT:
             return {
                 ...state, saveAnnotationsPath: action.payload.annotationPath,
                 imagesPath: action.payload.imagesPath,
