@@ -1,0 +1,10 @@
+.layer-container {
+  position: relative;
+  padding: 20px;
+}
+
+.annotation-image-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

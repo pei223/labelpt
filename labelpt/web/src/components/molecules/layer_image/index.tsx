@@ -1,14 +1,15 @@
-import { Paper } from "@material-ui/core"
-import React, { useEffect, useState } from "react"
-import { AnnotationManager, ContextSet } from "../../../domain/annotation_manager"
-import { errorLog, log } from "../../../utils/logger"
-import SubHeading from "../../atoms/sub_heading"
+import { Paper } from '@material-ui/core'
+import React, { useEffect } from 'react'
+import { AnnotationManager } from '../../../domain/annotation_manager'
+import { errorLog, log } from '../../../utils/logger'
+import SubHeading from '../../atoms/sub_heading'
+import './index.css'
 
 export interface ImageInfo {
-  fileName: string,
-  imageSrc?: any,
-  width: number,
-  height: number,
+  fileName: string
+  imageSrc?: any
+  width: number
+  height: number
 }
 
 export type ImageProps = {
@@ -22,52 +23,92 @@ const propsEquals = (props1: ImageProps, props2: ImageProps): boolean => {
   return props1.imageInfo === props2.imageInfo
 }
 
-const LayerImage = ({ imageInfo, width = "70%", viewHeight = "500px", annotationManager }: ImageProps) => {
-  log("Render on LayerImage")
-
-  annotationManager.setSize(imageInfo.width, imageInfo.height)
+const LayerImage = ({
+  imageInfo,
+  width = '70%',
+  viewHeight = '500px',
+  annotationManager,
+}: ImageProps) => {
+  log('Render on LayerImage')
 
   const getContext = (id: string): CanvasRenderingContext2D => {
     const canvas: any = document.getElementById(id)
-    return canvas.getContext("2d")
+    return canvas.getContext('2d')
   }
 
   const bindEvent = () => {
-    const node = document.getElementById("layer-container")
+    const node = document.getElementById('layer-container')
     if (node === null || node === undefined) {
-      errorLog("layer-container not found")
+      errorLog('layer-container not found')
       return
     }
     // TODO 必要なイベントを増やしていく
-    node?.addEventListener("mousedown", e => {
-      annotationManager.mode.onMouseDown(e.offsetX, e.offsetY, annotationManager.label)
+    node.addEventListener('mousedown', (e) => {
+      annotationManager.mode.onMouseDown(
+        e.offsetX,
+        e.offsetY,
+        annotationManager.label
+      )
     })
-    log("Event binded")
+    node.addEventListener('mousemove', (e) => {
+      annotationManager.mode.onMouseMove(
+        e.offsetX,
+        e.offsetY,
+        annotationManager.label
+      )
+    })
+    log('Event binded')
   }
 
   useEffect(() => {
-    log("Set context")
+    if (imageInfo.imageSrc === null) {
+      // 初回レンダリングのみ起こる可能性あり
+      log('src null')
+      return
+    }
+    log('Set context')
     annotationManager.setContextSet({
-      imageContext: getContext("image-layer"),
-      annotationContext: getContext("annotated-layer"),
-      regionContext: getContext("region-layer"),
-      highlightContext: getContext("highlight-layer"),
+      imageContext: getContext('image-layer'),
+      annotationContext: getContext('annotated-layer'),
+      regionContext: getContext('region-layer'),
+      highlightContext: getContext('highlight-layer'),
     })
+    annotationManager.setImage(
+      imageInfo.imageSrc,
+      imageInfo.width,
+      imageInfo.height
+    )
     bindEvent()
-  }, [])
+  }, [imageInfo])
 
   return (
-    <Paper style={{ "padding": "15px", width: width }}>
+    <Paper style={{ padding: '15px', width: width }}>
       <SubHeading>{imageInfo.fileName}</SubHeading>
-      <div style={{ overflow: "scroll", height: viewHeight }}>
-        <div id="layer-container" style={{ padding: "20px" }}>
-          <canvas id="image-layer" />
-          <canvas id="region-layer" />
-          <canvas id="annotated-layer" />
-          <canvas id="highlight-layer" />
-          {/* imgは削除予定 */}
-          <img src={imageInfo.imageSrc} width={`${imageInfo.width}px`} height={`${imageInfo.height}px`}
-            onClick={() => log(annotationManager.label.index)} />
+      <div style={{ overflow: 'scroll', height: viewHeight }}>
+        <div id="layer-container" className="layer-container">
+          <canvas
+            className="annotation-image-layer"
+            id="image-layer"
+            width={imageInfo.width}
+            height={imageInfo.height}
+          />
+          <canvas
+            id="region-layer"
+            className="annotation-image-layer"
+            width={imageInfo.width}
+            height={imageInfo.height}
+          />
+          <canvas
+            id="annotated-layer"
+            className="annotation-image-layer"
+            width={imageInfo.width}
+            height={imageInfo.height}
+          />
+          <canvas
+            id="highlight-layer"
+            width={imageInfo.width}
+            height={imageInfo.height}
+          />
         </div>
       </div>
     </Paper>

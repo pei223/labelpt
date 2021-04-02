@@ -29,7 +29,6 @@ def load_labels_from_file() -> List[str]:
 
 @eel.expose
 def save_labels_to_file(labels: Optional[List[str]]) -> bool:
-    print("aaa")
     filepath = filedialog.asksaveasfile(filetype=[("テキストファイル", "*.txt")])
     if filepath is None:
         return False
