@@ -18,6 +18,8 @@ export abstract class Mode {
   // TODO ここを補強
   abstract onMouseDown(x: number, y: number, label: Label): void
 
+  abstract onMouseUp(x: number, y: number): void
+
   abstract onMouseMove(x: number, y: number, label: Label): void
 
   setContextSet(contextSet: ContextSet) {
@@ -56,6 +58,10 @@ export class EmptyMode extends Mode {
 
   onMouseMove(x: number, y: number, label: Label): void {
     log(`MouseOver: ${x}, ${y}, ${label.index}`)
+  }
+
+  onMouseUp(x: number, y: number): void {
+    log(`MouseUp: ${x}, ${y}`)
   }
 }
 // TODO PaintModeなどModeをextendsして各描画モードの実装を行う

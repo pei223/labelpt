@@ -57,6 +57,9 @@ const LayerImage = ({
         annotationManager.label
       )
     })
+    node.addEventListener('mouseup', (e) => {
+      annotationManager.mode.onMouseUp(e.offsetX, e.offsetY)
+    })
     log('Event binded')
   }
 
@@ -115,5 +118,4 @@ const LayerImage = ({
   )
 }
 
-// TODO 画像情報が変わる以外で再描画はしないようにする
 export default React.memo(LayerImage, propsEquals)

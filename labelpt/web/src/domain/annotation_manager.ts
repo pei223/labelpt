@@ -1,5 +1,5 @@
 import Label from './label'
-import { ContextSet, EmptyMode, Mode } from './Mode'
+import { ContextSet, EmptyMode, Mode } from './annotation_mode'
 
 export class AnnotationManager {
   label: Label
