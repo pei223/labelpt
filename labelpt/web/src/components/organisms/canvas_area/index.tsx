@@ -16,26 +16,22 @@ export type CanvasAreaProps = {
   labelListHeight?: string
 }
 
-export type InnerCanvasAreaProps = {
-  imageInfo: ImageInfo
-  labelList: Label[]
-  annotationManager: AnnotationManager
-  canvasWidth: string
-  canvasHeight: string
-  labelAreaWidth: string
-  labelAreaHeight: string
-}
-
-const InnerCanvasArea = ({
+const CanvasArea = ({
   imageInfo,
   labelList,
-  annotationManager,
-  canvasWidth,
-  canvasHeight,
-  labelAreaWidth,
-  labelAreaHeight,
-}: InnerCanvasAreaProps) => {
+  canvasWidth = '600px',
+  canvasHeight = '600px',
+  labelAreaWidth = '300px',
+  labelListHeight: labelAreaHeight = '400px',
+}: CanvasAreaProps) => {
+  const [annotationManager, _] = useState(new AnnotationManager())
   const [selectedLabel, setSelectedLabel] = useState<Label>(labelList[0])
+
+  useEffect(() => {
+    annotationManager.changeMode(
+      new PaintMode(annotationManager.getContextSet(), 5)
+    )
+  }, [])
 
   const onLabelClick = (label: Label) => {
     setSelectedLabel(label)
@@ -65,43 +61,4 @@ const InnerCanvasArea = ({
   )
 }
 
-const propsEqual = (
-  props1: CanvasAreaProps,
-  props2: CanvasAreaProps
-): boolean => {
-  return (
-    props1.imageInfo === props2.imageInfo &&
-    props1.labelList === props2.labelList
-  )
-}
-
-const CanvasArea = ({
-  imageInfo,
-  labelList,
-  canvasWidth = '600px',
-  canvasHeight = '600px',
-  labelAreaWidth = '300px',
-  labelListHeight: labelAreaHeight = '400px',
-}: CanvasAreaProps) => {
-  log('Render on CanvasArea')
-
-  const [annotationManager, _] = useState(new AnnotationManager())
-  useEffect(() => {
-    annotationManager.changeMode(
-      new PaintMode(annotationManager.getContextSet(), 5)
-    )
-  }, [])
-  // annotationManagerを保持するためにmemo化してラッピングする
-  return (
-    <InnerCanvasArea
-      imageInfo={imageInfo}
-      labelList={labelList}
-      annotationManager={annotationManager}
-      canvasWidth={canvasWidth}
-      canvasHeight={canvasHeight}
-      labelAreaWidth={labelAreaWidth}
-      labelAreaHeight={labelAreaHeight}
-    />
-  )
-}
-export default React.memo(CanvasArea, propsEqual)
+export default CanvasArea
