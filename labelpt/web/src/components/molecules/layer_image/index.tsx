@@ -95,23 +95,29 @@ const LayerImage = ({
             width={imageInfo.width}
             height={imageInfo.height}
           />
-          <canvas
-            id="region-layer"
-            className="annotation-image-layer"
-            width={imageInfo.width}
-            height={imageInfo.height}
-          />
-          <canvas
-            id="annotated-layer"
-            className="annotation-image-layer"
-            width={imageInfo.width}
-            height={imageInfo.height}
-          />
-          <canvas
-            id="highlight-layer"
-            width={imageInfo.width}
-            height={imageInfo.height}
-          />
+          <div id="region-layer-wrapper" className="layer-wrapper">
+            <canvas
+              id="region-layer"
+              className="annotation-image-layer"
+              width={imageInfo.width}
+              height={imageInfo.height}
+            />
+          </div>
+          <div id="annotated-layer-wrapper" className="layer-wrapper">
+            <canvas
+              id="annotated-layer"
+              className="annotation-image-layer"
+              width={imageInfo.width}
+              height={imageInfo.height}
+            />
+          </div>
+          <div id="highlight-layer-wrapper" className="layer-wrapper">
+            <canvas
+              id="highlight-layer"
+              width={imageInfo.width}
+              height={imageInfo.height}
+            />
+          </div>
         </div>
       </div>
     </Paper>

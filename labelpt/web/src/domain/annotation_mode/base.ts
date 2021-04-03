@@ -1,5 +1,4 @@
-import { log } from '../utils/logger'
-import Label from './label'
+import Label from '../label'
 
 export interface ContextSet {
   imageContext: CanvasRenderingContext2D
@@ -10,12 +9,13 @@ export interface ContextSet {
 
 export abstract class Mode {
   contextSet: ContextSet | null
+  brushSize: number
 
-  constructor(contextSet: ContextSet | null) {
+  constructor(contextSet: ContextSet | null, brushSize: number) {
     this.contextSet = contextSet
+    this.brushSize = brushSize
   }
 
-  // TODO ここを補強
   abstract onMouseDown(x: number, y: number, label: Label): void
 
   abstract onMouseUp(x: number, y: number): void
@@ -26,7 +26,7 @@ export abstract class Mode {
     this.contextSet = contextSet
   }
 
-  getContext(): ContextSet | null {
+  getContextSet(): ContextSet | null {
     return this.contextSet
   }
 
@@ -45,23 +45,8 @@ export abstract class Mode {
       this.contextSet.imageContext.drawImage(img, 0, 0, width, height)
     }
   }
-}
 
-export class EmptyMode extends Mode {
-  constructor() {
-    super(null)
-  }
-
-  onMouseDown(x: number, y: number, label: Label): void {
-    log(`MouseDown: ${x}, ${y}, ${label.index}`)
-  }
-
-  onMouseMove(x: number, y: number, label: Label): void {
-    log(`MouseOver: ${x}, ${y}, ${label.index}`)
-  }
-
-  onMouseUp(x: number, y: number): void {
-    log(`MouseUp: ${x}, ${y}`)
+  setBrushSize(brushSize: number) {
+    this.brushSize = brushSize
   }
 }
-// TODO PaintModeなどModeをextendsして各描画モードの実装を行う

@@ -1,23 +1,31 @@
-
 export default class Label {
-  readonly index: number;
-  readonly name: string;
+  readonly index: number
+  readonly name: string
 
   constructor(index: number, name: string) {
     if (index < 0 || index > 255) {
-      throw RangeError("index must be 0~255")
+      throw RangeError('index must be 0~255')
     }
     this.index = index
     this.name = name
   }
 
   static backgroundLabel() {
-    return new Label(0, "background")
+    return new Label(0, 'background')
   }
 
   getBrightRGBString(): string {
     const RGB = colorPalette[this.index]
     return `rgba(${RGB[0] + 40}, ${RGB[1] + 40}, ${RGB[2] + 40}, 0.9)`
+  }
+
+  getAnnotationRGBString(): string {
+    const RGB = colorPalette[this.index]
+    return `rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 1.0)`
+  }
+
+  isBackground(): boolean {
+    return this.index === 0
   }
 
   grantLabelIndex(index: number): Label {
@@ -281,5 +289,5 @@ const colorPalette: number[][] = [
   [96, 96, 192],
   [224, 96, 192],
   [96, 224, 192],
-  [224, 224, 192]
+  [224, 224, 192],
 ]
