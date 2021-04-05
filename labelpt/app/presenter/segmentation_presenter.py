@@ -36,3 +36,9 @@ def load_filepath_list(dir_path: str) -> List[str]:
     file_list = list(map(lambda path: str(path), file_list))
     file_list.sort()
     return file_list
+
+
+@eel.expose
+def save_annotation_result(save_dir: str, filename: str, annotation_result: List[int]):
+    filename_without_extension = Path(filename).name
+    save_dir_path = Path(save_dir).joinpath(filename_without_extension + ".png")

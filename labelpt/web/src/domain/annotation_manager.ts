@@ -33,10 +33,18 @@ export class AnnotationManager {
     return this.mode.getContextSet()
   }
 
-  getAnnotationData(): any {
-    // TODO ここでアノテーションデータを返す
-    // Eelに送って、加工/保存をする
-    return ''
+  getAnnotationDataArray(): Uint8ClampedArray | null {
+    const contextSet = this.mode.getContextSet()
+    if (contextSet === null) {
+      errorLog('getContext is null on getAnnotationData()')
+      return null
+    }
+    return contextSet.annotationContext.getImageData(
+      0,
+      0,
+      this.mode.width,
+      this.mode.height
+    ).data
   }
 
   changeZoomRate(scale: number) {
@@ -44,6 +52,10 @@ export class AnnotationManager {
     const contextSet = this.mode.getContextSet()
     if (contextSet === null) {
       errorLog('ContextSet is null on changeZoomRate')
+    }
+    const a = contextSet?.annotationContext
+    if (a === null) {
+      return
     }
     contextSet?.annotationContext.scale(scale, scale)
     contextSet?.imageContext.scale(scale, scale)

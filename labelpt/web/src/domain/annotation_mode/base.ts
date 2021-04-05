@@ -7,13 +7,26 @@ export interface ContextSet {
   highlightContext: CanvasRenderingContext2D
 }
 
+export const PAINT_MODE_INDEX = 0
+export const POLIGON_MODE_INDEX = 1
+export const REGION_MODE_INDEX = 2
+
 export abstract class Mode {
   contextSet: ContextSet | null
   brushSize: number
+  width: number
+  height: number
 
-  constructor(contextSet: ContextSet | null, brushSize: number) {
+  constructor(
+    contextSet: ContextSet | null,
+    brushSize: number,
+    width: number,
+    height: number
+  ) {
     this.contextSet = contextSet
     this.brushSize = brushSize
+    this.width = width
+    this.height = height
   }
 
   abstract onMouseDown(x: number, y: number, label: Label): void
@@ -42,6 +55,8 @@ export abstract class Mode {
       }
       img.width = width
       img.height = height
+      this.width = width
+      this.height = height
       this.contextSet.imageContext.drawImage(img, 0, 0, width, height)
     }
   }
