@@ -21,8 +21,13 @@ export class AnnotationManager {
     this.mode = mode
   }
 
-  setImage(imgSrc: string, width: number, height: number) {
-    this.mode.setImage(imgSrc, width, height)
+  setImage(
+    imgSrc: string,
+    annotationImgSrc: string | null,
+    width: number,
+    height: number
+  ) {
+    this.mode.setImage(imgSrc, annotationImgSrc, width, height)
   }
 
   setContextSet(contextSet: ContextSet) {

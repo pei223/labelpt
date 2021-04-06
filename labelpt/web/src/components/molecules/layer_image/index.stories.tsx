@@ -12,6 +12,10 @@ storiesOf('molecules/LayerImage', module).add('default', () => (
         'image url',
         'https://tadworks.jp/wp-content/uploads/2020/08/profile_icon.png'
       ),
+      annotationImgSrc: text(
+        'annotation url',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonbu.com%2Fillust%2F2941&psig=AOvVaw2R3G8J6iyFihmK9DcHCoVe&ust=1617797553254000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjHvtbL6e8CFQAAAAAdAAAAABAD'
+      ),
       width: number('width', 400),
       height: number('height', 400),
     }}

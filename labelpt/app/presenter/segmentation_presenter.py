@@ -1,4 +1,3 @@
-import io
 from typing import List, Tuple, Optional
 import eel
 import numpy as np
@@ -12,20 +11,39 @@ from labelpt.app import image_process
 
 
 @eel.expose
-def load_jpeg_image_and_width_height(filepath: str) -> Optional[Tuple[str, int, int]]:
+def load_img_and_annotation_and_width_height(image_filepath: str, annotation_dir_path: str) -> Optional[
+    Tuple[str, str, int, int]]:
+    """
+    :param image_filepath: image filepath
+    :param annotation_dir_path: annotation directory path
+    :return: [base64 image, base64 annotation image, width, height]
+    """
+    image_filepath = Path(image_filepath)
+    if not image_filepath.exists():
+        messagebox.showwarning("Warning", f"{image_filepath} is not exist.")
+        return None
+
+    b64_img, width, height = _load_base64_image_and_size(str(image_filepath))
+    annotation_filepath = Path(annotation_dir_path).joinpath(image_filepath.stem + ".png")
+    annotation_b64_img, _, _ = _load_base64_image_and_size(
+        str(annotation_filepath), mode="RGBA") if annotation_filepath.exists() else (None, 0, 0)
+    return b64_img, annotation_b64_img, width, height
+
+
+def _load_base64_image_and_size(filepath: str, mode: str = "RGB") -> Tuple[str, int, int]:
     """
     :param filepath:
-    :return:
+    :return: [base64 image, width, height]
     """
-    if not Path(filepath).exists():
-        messagebox.showwarning("Warning", f"{filepath} is not exist.")
-        return None
     image: Image.Image = Image.open(filepath)
-    image = image.convert("RGB")
+    image = image.convert(mode)
+    if mode == "RGBA":
+        image_arr = image_process.background_to_transparent(np.array(image))
+        image = Image.fromarray(image_arr)
     buffered = BytesIO()
-    image.save(buffered, format="JPEG")
+    image.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue())
-    return f"data:image/jpeg;base64,{str(img_str)[2:-1]}", image.size[0], image.size[1]
+    return f"data:image/png;base64,{str(img_str)[2:-1]}", image.size[0], image.size[1]
 
 
 @eel.expose

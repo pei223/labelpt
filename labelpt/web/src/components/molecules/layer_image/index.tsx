@@ -7,7 +7,8 @@ import './index.css'
 
 export interface ImageInfo {
   fileName: string
-  imageSrc?: any
+  imageSrc: string | null
+  annotationImgSrc: string | null
   width: number
   height: number
 }
@@ -78,6 +79,7 @@ const LayerImage = ({
     })
     annotationManager.setImage(
       imageInfo.imageSrc,
+      imageInfo.annotationImgSrc,
       imageInfo.width,
       imageInfo.height
     )

@@ -64,7 +64,7 @@ INDEXED_COLOR_PALETTE = [0, 0, 0, 128, 0, 0, 0, 128, 0, 128, 128, 0, 0, 0, 128, 
 INDEXED_COLOR_PALETTE_ARRAY = np.array(INDEXED_COLOR_PALETTE).reshape((-1, 3)).astype("uint8")
 
 
-def rgb_to_index(rgb_array: np.ndarray, label_num: int, padding=15):
+def rgb_to_index(rgb_array: np.ndarray, label_num: int, padding=15) -> np.ndarray:
     assert rgb_array.ndim == 3
     new_img = np.zeros(rgb_array.shape[:2])
     for label in range(1, label_num):
@@ -72,3 +72,10 @@ def rgb_to_index(rgb_array: np.ndarray, label_num: int, padding=15):
         masks = np.all(rgb_array > (label_rgb - 10), axis=2) & np.all(rgb_array < (label_rgb + 10), axis=2)
         new_img[masks] = label
     return new_img.astype("uint8")
+
+
+def background_to_transparent(rgba_array: np.ndarray) -> np.ndarray:
+    assert rgba_array.ndim == 3 and rgba_array.shape[-1] == 4
+    masks = np.all(rgba_array[:, :, :3] == 0, axis=2)
+    rgba_array[masks] = np.array([0, 0, 0, 0])
+    return rgba_array

@@ -9,6 +9,8 @@ const canvasAreaProps: CanvasAreaProps = {
   imageInfo: {
     fileName: 'test',
     imageSrc: 'https://tadworks.jp/wp-content/uploads/2020/08/profile_icon.png',
+    annotationImgSrc:
+      'https://assets.st-note.com/production/uploads/images/14122235/picture_pc_247b05ada2141579fba2b2da58d54dc0.png',
     width: 400,
     height: 400,
   },

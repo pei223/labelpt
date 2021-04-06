@@ -43,26 +43,60 @@ export abstract class Mode {
     return this.contextSet
   }
 
-  setImage(imgSrc: string, width: number, height: number) {
+  setImage(
+    imgSrc: string,
+    annotationImgSrc: string | null,
+    width: number,
+    height: number
+  ) {
     if (!this.contextSet) {
       return
     }
-    const img = new Image()
+    this.width = width
+    this.height = height
+    this.setImageToCanvas(imgSrc, width, height)
+    this.setAnnotationImageToCanvas(annotationImgSrc, width, height)
+  }
+
+  private setImageToCanvas(imgSrc: string, width: number, height: number) {
+    const img = new Image(width, height)
     img.src = imgSrc
     img.onload = () => {
       if (!this.contextSet) {
         return
       }
-      img.width = width
-      img.height = height
-      this.width = width
-      this.height = height
       this.contextSet.imageContext.drawImage(img, 0, 0, width, height)
-      const emptyImage = this.contextSet.annotationContext.createImageData(
-        width,
-        height
-      )
-      this.contextSet.annotationContext.putImageData(emptyImage, width, height)
+    }
+  }
+
+  private setAnnotationImageToCanvas(
+    annotationImgSrc: string | null,
+    width: number,
+    height: number
+  ) {
+    if (!this.contextSet) {
+      return
+    }
+    const emptyImage = this.contextSet.annotationContext.createImageData(
+      width,
+      height
+    )
+    this.contextSet.annotationContext.putImageData(emptyImage, width, height)
+    if (annotationImgSrc !== null) {
+      const annotationImg = new Image()
+      annotationImg.src = annotationImgSrc
+      annotationImg.onload = () => {
+        if (!this.contextSet) {
+          return
+        }
+        this.contextSet.annotationContext.drawImage(
+          annotationImg,
+          0,
+          0,
+          width,
+          height
+        )
+      }
     }
   }
 

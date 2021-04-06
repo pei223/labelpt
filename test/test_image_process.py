@@ -40,3 +40,41 @@ class TestImageProcess(unittest.TestCase):
         ]
         result_img = image_process.rgb_to_index(dummy_data, 5)
         self.assertTrue(np.array_equal(result_img, expected_img))
+
+    def test_background_to_transparent(self):
+        dummy_img = [
+            [
+                [0, 0, 0, 255],
+                [128, 0, 0, 255],
+                [0, 128, 0, 255],
+            ],
+            [
+                [0, 0, 0, 255],
+                [128, 0, 0, 255],
+                [0, 128, 0, 255],
+            ],
+            [
+                [0, 0, 0, 255],
+                [128, 0, 0, 255],
+                [0, 128, 0, 255],
+            ],
+        ]
+        expected_img = [
+            [
+                [0, 0, 0, 0],
+                [128, 0, 0, 255],
+                [0, 128, 0, 255],
+            ],
+            [
+                [0, 0, 0, 0],
+                [128, 0, 0, 255],
+                [0, 128, 0, 255],
+            ],
+            [
+                [0, 0, 0, 0],
+                [128, 0, 0, 255],
+                [0, 128, 0, 255],
+            ],
+        ]
+        result_img = image_process.background_to_transparent(np.array(dummy_img))
+        self.assertTrue(np.array_equal(result_img, expected_img))

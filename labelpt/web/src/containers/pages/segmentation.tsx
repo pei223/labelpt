@@ -18,13 +18,13 @@ export const SegmentationPage = () => {
   const [imageInfo, setImageInfo] = useState<ImageInfo>({
     fileName: 'No image',
     imageSrc: null,
+    annotationImgSrc: null,
     width: 400,
     height: 400,
   })
 
   const onFileRowClick = async (_: FilePathWrapper, index: number) => {
     const prevFilePath = state.filePathList[state.selectedFilePathIndex]
-
     const result = await eel.save_annotation_result(
       state.saveAnnotationsPath?.filePath,
       prevFilePath.getFileName(),
@@ -65,13 +65,17 @@ export const SegmentationPage = () => {
     }
     const filePath = state.filePathList[state.selectedFilePathIndex]
     eel
-      .load_jpeg_image_and_width_height(filePath.filePath)()
-      .then((imageInfo: [any, number, number]) =>
+      .load_img_and_annotation_and_width_height(
+        filePath.filePath,
+        state.saveAnnotationsPath?.filePath
+      )()
+      .then((imageInfo: [string, string, number, number]) =>
         setImageInfo({
           fileName: filePath.getFileName(),
           imageSrc: imageInfo[0],
-          width: imageInfo[1],
-          height: imageInfo[2],
+          annotationImgSrc: imageInfo[1],
+          width: imageInfo[2],
+          height: imageInfo[3],
         })
       )
   }, [state.selectedFilePathIndex])
