@@ -58,6 +58,11 @@ export abstract class Mode {
       this.width = width
       this.height = height
       this.contextSet.imageContext.drawImage(img, 0, 0, width, height)
+      const emptyImage = this.contextSet.annotationContext.createImageData(
+        width,
+        height
+      )
+      this.contextSet.annotationContext.putImageData(emptyImage, width, height)
     }
   }
 

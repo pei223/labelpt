@@ -1,10 +1,14 @@
+import io
 from typing import List, Tuple, Optional
 import eel
+import numpy as np
 from pathlib import Path
 from tkinter import messagebox
 from PIL import Image
 import base64
 from io import BytesIO
+
+from labelpt.app import image_process
 
 
 @eel.expose
@@ -39,6 +43,14 @@ def load_filepath_list(dir_path: str) -> List[str]:
 
 
 @eel.expose
-def save_annotation_result(save_dir: str, filename: str, annotation_result: List[int]):
-    filename_without_extension = Path(filename).name
-    save_dir_path = Path(save_dir).joinpath(filename_without_extension + ".png")
+def save_annotation_result(save_dir: str, filename: str, rgba_list: List[int], label_count: int, width: int,
+                           height: int) -> bool:
+    save_dir_path = Path(save_dir).joinpath(Path(filename).stem + ".png")
+
+    result_rgb_img = np.array(rgba_list).round().astype("uint8").reshape([height, width, 4])[:, :, :3]
+    print(np.unique(result_rgb_img), result_rgb_img.dtype, result_rgb_img.shape)
+    result_img_arr = image_process.rgb_to_index(result_rgb_img, label_count)
+    result_img = Image.fromarray(result_img_arr, mode="P")
+    result_img.putpalette(image_process.INDEXED_COLOR_PALETTE)
+    result_img.save(str(save_dir_path))
+    return True

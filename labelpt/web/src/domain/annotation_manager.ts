@@ -33,18 +33,20 @@ export class AnnotationManager {
     return this.mode.getContextSet()
   }
 
-  getAnnotationDataArray(): Uint8ClampedArray | null {
+  getAnnotationDataArray(): number[] | null {
     const contextSet = this.mode.getContextSet()
     if (contextSet === null) {
       errorLog('getContext is null on getAnnotationData()')
       return null
     }
-    return contextSet.annotationContext.getImageData(
-      0,
-      0,
-      this.mode.width,
-      this.mode.height
-    ).data
+    return Array.from(
+      contextSet.annotationContext.getImageData(
+        0,
+        0,
+        this.mode.width,
+        this.mode.height
+      ).data
+    )
   }
 
   changeZoomRate(scale: number) {

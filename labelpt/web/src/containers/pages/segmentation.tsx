@@ -22,7 +22,17 @@ export const SegmentationPage = () => {
     height: 400,
   })
 
-  const onFileRowClick = (filePath: FilePathWrapper, index: number) => {
+  const onFileRowClick = async (_: FilePathWrapper, index: number) => {
+    const prevFilePath = state.filePathList[state.selectedFilePathIndex]
+
+    const result = await eel.save_annotation_result(
+      state.saveAnnotationsPath?.filePath,
+      prevFilePath.getFileName(),
+      annotationManager.getAnnotationDataArray(),
+      state.labelList.length,
+      annotationManager.mode.width,
+      annotationManager.mode.height
+    )()
     dispatch(setSelectedFile(index))
   }
 

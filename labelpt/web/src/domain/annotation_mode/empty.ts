@@ -4,7 +4,7 @@ import { Mode } from './base'
 
 export class EmptyMode extends Mode {
   constructor() {
-    super(null, 1)
+    super(null, 1, 0, 0)
   }
 
   onMouseDown(x: number, y: number, label: Label): void {
