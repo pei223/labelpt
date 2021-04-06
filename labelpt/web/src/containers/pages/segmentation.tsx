@@ -28,10 +28,10 @@ export const SegmentationPage = () => {
     const result = await eel.save_annotation_result(
       state.saveAnnotationsPath?.filePath,
       prevFilePath.getFileName(),
-      annotationManager.getAnnotationDataArray(),
-      state.labelList.length,
-      annotationManager.mode.width,
-      annotationManager.mode.height
+      annotationManager.toBase64Image(
+        document.getElementById('annotated-layer') as HTMLCanvasElement
+      ),
+      state.labelList.length
     )()
     dispatch(setSelectedFile(index))
   }

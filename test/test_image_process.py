@@ -25,7 +25,7 @@ class TestImageProcess(unittest.TestCase):
                 [0, 0, 128],
             ],
             [
-                [128, 0, 0],
+                [120, 0, 0],
                 [0, 128, 0],
                 [128, 128, 0],
                 [0, 0, 128],
