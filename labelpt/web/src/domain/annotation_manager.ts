@@ -6,7 +6,6 @@ import { errorLog } from '../utils/logger'
 export class AnnotationManager {
   label: Label
   mode: Mode
-  zoomLate: number = 1
 
   constructor() {
     this.mode = new EmptyMode()
@@ -40,21 +39,5 @@ export class AnnotationManager {
 
   toBase64Image(node: HTMLCanvasElement | null): string {
     return node === null ? '' : node.toDataURL('image/png').replace(/^.*,/, '')
-  }
-
-  changeZoomRate(scale: number) {
-    this.zoomLate = scale
-    const contextSet = this.mode.getContextSet()
-    if (contextSet === null) {
-      errorLog('ContextSet is null on changeZoomRate')
-    }
-    const a = contextSet?.annotationContext
-    if (a === null) {
-      return
-    }
-    contextSet?.annotationContext.scale(scale, scale)
-    contextSet?.imageContext.scale(scale, scale)
-    contextSet?.highlightContext.scale(scale, scale)
-    contextSet?.regionContext.scale(scale, scale)
   }
 }

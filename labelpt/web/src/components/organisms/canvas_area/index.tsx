@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Label from '../../../domain/label'
 import { AnnotationManager } from '../../../domain/annotation_manager'
 import { errorLog, log } from '../../../utils/logger'
@@ -57,6 +57,9 @@ const CanvasArea = ({
   const [brushSize, setBrushSize] = useState<number>(DEFAULT_BRUSH_SIZE)
   const [modeIndex, setModeIndex] = useState<number>(0)
   const [zoomRate, setZoomRate] = useState<number>(1.0)
+  // コールバック内でState値を参照するため、インスタンス変数が必要
+  // コールバック内だとStateはコールバック実行時の値から変わらないためuseRefに最新の値を入れる必要がある
+  const prevZoomRate = useRef<number>(1.0)
 
   useEffect(() => {
     annotationManager.changeMode(
@@ -68,6 +71,8 @@ const CanvasArea = ({
       )
     )
     onAlphaChange(alpha)
+    window.addEventListener('wheel', onWheel, { passive: false })
+    return () => window.removeEventListener('wheel', onWheel)
   }, [])
 
   const onLabelClick = (label: Label) => {
@@ -113,12 +118,30 @@ const CanvasArea = ({
     annotationManager.mode.setBrushSize(brushSize)
   }
 
-  const changeZoomRate = (diff: number) => {
-    if (zoomRate >= 3.0 || zoomRate <= 0.11) {
+  const changeZoomRate = (newValue: number) => {
+    if (newValue > 3.01 || newValue < 0.099) {
       return
     }
-    // TODO 画像・アノテ結果などのズーム
-    setZoomRate(zoomRate + diff)
+    const layerContainer = document.getElementById('layer-container')
+    if (layerContainer === null) {
+      errorLog('layerContainer is null.')
+      return
+    }
+    layerContainer.style.transform = `scale(${newValue})`
+    layerContainer.style.transformOrigin = `left top`
+    setZoomRate(newValue)
+    prevZoomRate.current = newValue
+  }
+
+  const onWheel = (event: WheelEvent) => {
+    if (!event.ctrlKey) {
+      return
+    }
+    event.preventDefault()
+    let wheelVal = event.deltaY
+    wheelVal < 0
+      ? changeZoomRate(prevZoomRate.current + 0.1)
+      : changeZoomRate(prevZoomRate.current - 0.1)
   }
 
   return (
@@ -141,8 +164,8 @@ const CanvasArea = ({
           modeIndex={modeIndex}
           modeValues={modes}
           zoomRate={zoomRate}
-          onZoomIn={() => changeZoomRate(0.1)}
-          onZoomOut={() => changeZoomRate(-0.1)}
+          onZoomIn={() => changeZoomRate(zoomRate + 0.1)}
+          onZoomOut={() => changeZoomRate(zoomRate - 0.1)}
         />
       </Box>
       <Box p={1} css={{ width: labelAreaWidth }}>
