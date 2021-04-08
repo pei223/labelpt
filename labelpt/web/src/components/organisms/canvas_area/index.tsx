@@ -89,12 +89,18 @@ const CanvasArea = ({
   const onAlphaChange = (alpha: number) => {
     // NOTE React外で直接DOMいじるのは良くないが現状これしか方法なし
     const annotatedLayer = document.getElementById('annotated-layer')
+    const highlightLayer = document.getElementById('highlight-layer')
     if (annotatedLayer === null) {
       errorLog('annotatedLayer is null.')
       return
     }
+    if (highlightLayer === null) {
+      errorLog('highlightLayer is null.')
+      return
+    }
     setAlpha(alpha)
     annotatedLayer.style.opacity = alpha.toString()
+    highlightLayer.style.opacity = alpha.toString()
   }
 
   const onModeIndexChange = (modeIndex: number) => {

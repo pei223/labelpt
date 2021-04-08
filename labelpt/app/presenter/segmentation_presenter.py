@@ -67,7 +67,7 @@ def save_annotation_result(save_dir: str, filename: str, b64_result_img: Optiona
     save_file_path = Path(save_dir).joinpath(Path(filename).stem + ".png")
     rgba_img = Image.open(BytesIO(base64.b64decode(b64_result_img)))
     rgb_img_arr = np.array(rgba_img)[:, :, :3].astype("uint8")
-    index_img_arr = image_process.rgb_to_index(rgb_img_arr, label_num)
+    index_img_arr = image_process.rgb_to_index(rgb_img_arr, label_num, padding=20)
     index_img = Image.fromarray(index_img_arr, mode="P")
     index_img.putpalette(image_process.INDEXED_COLOR_PALETTE)
     index_img.save(str(save_file_path))

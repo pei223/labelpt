@@ -35,6 +35,8 @@ export abstract class Mode {
 
   abstract onMouseMove(x: number, y: number, label: Label): void
 
+  onMouseLeave() {}
+
   setContextSet(contextSet: ContextSet) {
     this.contextSet = contextSet
   }
@@ -98,6 +100,10 @@ export abstract class Mode {
         )
       }
     }
+  }
+
+  clearHighlight() {
+    this.contextSet?.highlightContext.clearRect(0, 0, this.width, this.height)
   }
 
   setBrushSize(brushSize: number) {

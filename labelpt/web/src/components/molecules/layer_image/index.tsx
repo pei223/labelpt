@@ -61,6 +61,9 @@ const LayerImage = ({
     node.addEventListener('mouseup', (e) => {
       annotationManager.mode.onMouseUp(e.offsetX, e.offsetY)
     })
+    node.addEventListener('mouseleave', (e) => {
+      annotationManager.mode.onMouseLeave()
+    })
     log('Event binded')
   }
 

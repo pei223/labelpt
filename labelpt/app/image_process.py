@@ -69,7 +69,7 @@ def rgb_to_index(rgb_array: np.ndarray, label_num: int, padding=15) -> np.ndarra
     new_img = np.zeros(rgb_array.shape[:2])
     for label in range(1, label_num):
         label_rgb = INDEXED_COLOR_PALETTE_ARRAY[label].astype("int16")
-        masks = np.all(rgb_array > (label_rgb - 10), axis=2) & np.all(rgb_array < (label_rgb + 10), axis=2)
+        masks = np.all(rgb_array > (label_rgb - padding), axis=2) & np.all(rgb_array < (label_rgb + padding), axis=2)
         new_img[masks] = label
     return new_img.astype("uint8")
 
