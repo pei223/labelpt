@@ -42,6 +42,7 @@ const canvasAreaProps: CanvasAreaProps = {
 
 storiesOf('templates/SegmentationTemplate', module).add('default', () => (
   <SegmentationTemplate
+    onSaveShortcut={action('save shortcut')}
     onFileClick={onFileClick}
     filePathList={filepathList}
     selectedFileIndex={1}

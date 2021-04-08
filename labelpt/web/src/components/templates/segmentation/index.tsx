@@ -1,5 +1,5 @@
 import { Box, Grid } from '@material-ui/core'
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import FilePathWrapper from '../../../domain/filepath_wrapper'
 import { log } from '../../../utils/logger'
 import InfoToast from '../../atoms/info_toast'
@@ -12,6 +12,7 @@ type Props = {
   selectedFileIndex: number
   canvasAreaProps: CanvasAreaProps
   onInfoToastClose: () => void
+  onSaveShortcut: () => void
   infoToastMessage?: string
 }
 
@@ -21,9 +22,27 @@ const SegmentationTemplate = ({
   selectedFileIndex,
   canvasAreaProps,
   onInfoToastClose,
+  onSaveShortcut,
   infoToastMessage = '',
 }: Props) => {
   log('Render on SegmentationTemplate')
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (!event.ctrlKey) {
+      return
+    }
+    if (event.key === 's') {
+      event.preventDefault()
+      onSaveShortcut()
+    }
+  }
+
+  useEffect(() => {
+    // selectedFileIndex変更時に再度コールバックを張ることで、コールバック内でstateの最新値を見れる
+    // ただ、pages/Segmentationの実装が変わると動かなくなることも
+    document.addEventListener('keydown', onKeyDown, false)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [selectedFileIndex])
 
   // TODO Width: 95%はいけてない
   return (

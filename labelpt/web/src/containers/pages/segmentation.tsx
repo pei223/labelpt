@@ -37,13 +37,15 @@ export const SegmentationPage = () => {
   }
 
   const onFileRowClick = async (_: FilePathWrapper, index: number) => {
-    saveAnnotationResult()
-    dispatch(setSelectedFile(index))
+    saveAnnotationResult().then(() => {
+      dispatch(setSelectedFile(index))
+    })
   }
 
   const onSaveClick = () => {
-    saveAnnotationResult()
-    setInfoToastMessage('Saved!')
+    saveAnnotationResult().then(() => {
+      setInfoToastMessage('Saved!')
+    })
   }
 
   const loadFilePathList = async () => {
@@ -99,6 +101,7 @@ export const SegmentationPage = () => {
 
   return (
     <SegmentationTemplate
+      onSaveShortcut={onSaveClick}
       infoToastMessage={infoToastMessage}
       onInfoToastClose={() => setInfoToastMessage('')}
       onFileClick={onFileRowClick}
