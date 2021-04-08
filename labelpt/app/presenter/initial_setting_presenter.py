@@ -19,7 +19,7 @@ def choose_directory() -> Optional[str]:
 
 @eel.expose
 def load_labels_from_file() -> List[str]:
-    filepath = filedialog.askopenfile(filetype=[("テキストファイル", "*.txt")])
+    filepath = filedialog.askopenfile(filetypes=[("テキストファイル", "*.txt")])
     if filepath is None:
         return []
     filepath = filepath.name
@@ -29,7 +29,7 @@ def load_labels_from_file() -> List[str]:
 
 @eel.expose
 def save_labels_to_file(labels: Optional[List[str]]) -> bool:
-    filepath = filedialog.asksaveasfile(filetype=[("テキストファイル", "*.txt")])
+    filepath = filedialog.asksaveasfile(filetypes=[("テキストファイル", "*.txt")])
     if filepath is None:
         return False
     filepath = filepath.name
