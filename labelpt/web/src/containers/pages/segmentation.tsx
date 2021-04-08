@@ -14,6 +14,7 @@ export const SegmentationPage = () => {
 
   const { state, dispatch } = useContext(AppContext)
   const [annotationManager, _] = useState(new AnnotationManager())
+  const [infoToastMessage, setInfoToastMessage] = useState<string>('')
 
   const [imageInfo, setImageInfo] = useState<ImageInfo>({
     fileName: 'No image',
@@ -23,7 +24,7 @@ export const SegmentationPage = () => {
     height: 400,
   })
 
-  const onFileRowClick = async (_: FilePathWrapper, index: number) => {
+  const saveAnnotationResult = async () => {
     const prevFilePath = state.filePathList[state.selectedFilePathIndex]
     const result = await eel.save_annotation_result(
       state.saveAnnotationsPath?.filePath,
@@ -33,7 +34,16 @@ export const SegmentationPage = () => {
       ),
       state.labelList.length
     )()
+  }
+
+  const onFileRowClick = async (_: FilePathWrapper, index: number) => {
+    saveAnnotationResult()
     dispatch(setSelectedFile(index))
+  }
+
+  const onSaveClick = () => {
+    saveAnnotationResult()
+    setInfoToastMessage('Saved!')
   }
 
   const loadFilePathList = async () => {
@@ -84,10 +94,13 @@ export const SegmentationPage = () => {
     annotationManager: annotationManager,
     imageInfo: imageInfo,
     labelList: state.labelList,
+    onSaveClick: onSaveClick,
   }
 
   return (
     <SegmentationTemplate
+      infoToastMessage={infoToastMessage}
+      onInfoToastClose={() => setInfoToastMessage('')}
       onFileClick={onFileRowClick}
       filePathList={state.filePathList}
       selectedFileIndex={state.selectedFilePathIndex}

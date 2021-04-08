@@ -17,6 +17,7 @@ export type CanvasAreaProps = {
   annotationManager: AnnotationManager
   imageInfo: ImageInfo
   labelList: Label[]
+  onSaveClick: () => void
   canvasWidth?: string
   canvasHeight?: string
   labelAreaWidth?: string
@@ -45,6 +46,7 @@ const CanvasArea = ({
   annotationManager,
   imageInfo,
   labelList,
+  onSaveClick,
   canvasWidth = '600px',
   canvasHeight = '600px',
   labelAreaWidth = '300px',
@@ -154,6 +156,7 @@ const CanvasArea = ({
     <>
       <Box p={1} css={{ height: canvasHeight, width: canvasWidth }}>
         <LayerImage
+          onSaveClick={onSaveClick}
           imageInfo={imageInfo}
           annotationManager={annotationManager}
           width="auto"

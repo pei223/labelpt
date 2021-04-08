@@ -6,10 +6,12 @@ import FilePathWrapper from '../../../domain/filepath_wrapper'
 import Label from '../../../domain/label'
 import { CanvasAreaProps } from '../../organisms/canvas_area'
 import { AnnotationManager } from '../../../domain/annotation_manager'
+import { text } from '@storybook/addon-knobs'
 
 const onFileClick = (filePathList: FilePathWrapper, index: Number) => {
   action('filepath row clicked')
 }
+const onClicked = () => action('save clicked')
 
 const filepathList = [
   new FilePathWrapper('dasklfj;dsa/fdjaslkf;/eee.png'),
@@ -35,6 +37,7 @@ const canvasAreaProps: CanvasAreaProps = {
     new Label(4, 'aaa3'),
     new Label(5, 'aaa4'),
   ],
+  onSaveClick: onClicked,
 }
 
 storiesOf('templates/SegmentationTemplate', module).add('default', () => (
@@ -43,5 +46,7 @@ storiesOf('templates/SegmentationTemplate', module).add('default', () => (
     filePathList={filepathList}
     selectedFileIndex={1}
     canvasAreaProps={canvasAreaProps}
+    infoToastMessage={text('toast message', '')}
+    onInfoToastClose={action('close info toast')}
   />
 ))

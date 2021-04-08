@@ -2,6 +2,7 @@ import { Box, Grid } from '@material-ui/core'
 import React from 'react'
 import FilePathWrapper from '../../../domain/filepath_wrapper'
 import { log } from '../../../utils/logger'
+import InfoToast from '../../atoms/info_toast'
 import FilePathList from '../../molecules/filepath_list'
 import CanvasArea, { CanvasAreaProps } from '../../organisms/canvas_area'
 
@@ -10,6 +11,8 @@ type Props = {
   onFileClick: (filePath: FilePathWrapper, index: number) => void
   selectedFileIndex: number
   canvasAreaProps: CanvasAreaProps
+  onInfoToastClose: () => void
+  infoToastMessage?: string
 }
 
 const SegmentationTemplate = ({
@@ -17,6 +20,8 @@ const SegmentationTemplate = ({
   onFileClick,
   selectedFileIndex,
   canvasAreaProps,
+  onInfoToastClose,
+  infoToastMessage = '',
 }: Props) => {
   log('Render on SegmentationTemplate')
 
@@ -46,6 +51,11 @@ const SegmentationTemplate = ({
           />
         </Box>
       </Box>
+      <InfoToast
+        message={infoToastMessage}
+        open={infoToastMessage !== ''}
+        onClose={onInfoToastClose}
+      />
     </div>
   )
 }

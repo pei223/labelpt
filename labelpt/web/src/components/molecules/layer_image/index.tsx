@@ -1,4 +1,4 @@
-import { Paper } from '@material-ui/core'
+import { Button, Paper } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { AnnotationManager } from '../../../domain/annotation_manager'
 import { errorLog, log } from '../../../utils/logger'
@@ -15,6 +15,7 @@ export interface ImageInfo {
 
 export type ImageProps = {
   imageInfo: ImageInfo
+  onSaveClick: () => void
   width?: string
   viewHeight?: string
   annotationManager: AnnotationManager
@@ -26,6 +27,7 @@ const propsEquals = (props1: ImageProps, props2: ImageProps): boolean => {
 
 const LayerImage = ({
   imageInfo,
+  onSaveClick,
   width = '70%',
   viewHeight = '500px',
   annotationManager,
@@ -91,8 +93,25 @@ const LayerImage = ({
 
   return (
     <Paper style={{ padding: '15px', width: width }}>
-      <SubHeading>{imageInfo.fileName}</SubHeading>
-      <div style={{ overflow: 'scroll', height: viewHeight }}>
+      <div>
+        <SubHeading style={{ display: 'inline' }}>
+          {imageInfo.fileName}
+        </SubHeading>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onSaveClick}
+          style={{ float: 'right', marginRight: '20px' }}>
+          Save
+        </Button>
+      </div>
+      <div
+        style={{
+          overflow: 'scroll',
+          height: viewHeight,
+          clear: 'both',
+          marginTop: '20px',
+        }}>
         <div id="layer-container" className="layer-container">
           <canvas
             className="annotation-image-layer"

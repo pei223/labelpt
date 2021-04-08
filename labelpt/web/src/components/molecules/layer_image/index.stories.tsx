@@ -3,9 +3,11 @@ import { storiesOf } from '@storybook/react'
 import LayerImage from './index'
 import { number, text } from '@storybook/addon-knobs'
 import { AnnotationManager } from '../../../domain/annotation_manager'
+import { action } from '@storybook/addon-actions'
 
 storiesOf('molecules/LayerImage', module).add('default', () => (
   <LayerImage
+    onSaveClick={() => action('Save click')}
     imageInfo={{
       fileName: text('file name', 'test.jpg'),
       imageSrc: text(

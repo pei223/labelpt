@@ -3,7 +3,9 @@ import { storiesOf } from '@storybook/react'
 import Label from '../../../domain/label'
 import CanvasArea, { CanvasAreaProps } from '../../organisms/canvas_area'
 import { AnnotationManager } from '../../../domain/annotation_manager'
+import { action } from '@storybook/addon-actions'
 
+const onClicked = () => action('save clicked')
 const canvasAreaProps: CanvasAreaProps = {
   annotationManager: new AnnotationManager(),
   imageInfo: {
@@ -22,6 +24,7 @@ const canvasAreaProps: CanvasAreaProps = {
     new Label(4, 'aaa3'),
     new Label(5, 'aaa4'),
   ],
+  onSaveClick: onClicked,
 }
 
 storiesOf('organisms/CanvasArea', module).add('default', () => (
