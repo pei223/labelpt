@@ -1,3 +1,4 @@
+import { log, errorLog } from '../../utils/logger'
 import Label from '../label'
 
 export interface ContextSet {
@@ -65,6 +66,7 @@ export abstract class Mode {
     img.src = imgSrc
     img.onload = () => {
       if (!this.contextSet) {
+        errorLog('contextset is null on setImageToCanvas')
         return
       }
       this.contextSet.imageContext.drawImage(img, 0, 0, width, height)
@@ -79,16 +81,13 @@ export abstract class Mode {
     if (!this.contextSet) {
       return
     }
-    const emptyImage = this.contextSet.annotationContext.createImageData(
-      width,
-      height
-    )
-    this.contextSet.annotationContext.putImageData(emptyImage, width, height)
+    this.contextSet.annotationContext.clearRect(0, 0, width, height)
     if (annotationImgSrc !== null) {
-      const annotationImg = new Image()
+      const annotationImg = new Image(width, height)
       annotationImg.src = annotationImgSrc
       annotationImg.onload = () => {
         if (!this.contextSet) {
+          errorLog('contextset is null on setAnnotationImageToCanvas')
           return
         }
         this.contextSet.annotationContext.drawImage(
