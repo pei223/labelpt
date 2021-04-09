@@ -6,7 +6,7 @@ import FilePathWrapper from '../../../domain/filepath_wrapper'
 import Label from '../../../domain/label'
 import { CanvasAreaProps } from '../../organisms/canvas_area'
 import { AnnotationManager } from '../../../domain/annotation_manager'
-import { text } from '@storybook/addon-knobs'
+import { boolean, text } from '@storybook/addon-knobs'
 
 const onFileClick = (filePathList: FilePathWrapper, index: Number) => {
   action('filepath row clicked')
@@ -42,6 +42,7 @@ const canvasAreaProps: CanvasAreaProps = {
 
 storiesOf('templates/SegmentationTemplate', module).add('default', () => (
   <SegmentationTemplate
+    isLoading={boolean('loading', false)}
     onSaveShortcut={action('save shortcut')}
     onFileClick={onFileClick}
     filePathList={filepathList}

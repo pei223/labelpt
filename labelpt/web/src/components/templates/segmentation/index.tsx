@@ -1,8 +1,9 @@
-import { Box, Grid } from '@material-ui/core'
-import React, { useCallback, useEffect } from 'react'
+import { Box } from '@material-ui/core'
+import React, { useEffect } from 'react'
 import FilePathWrapper from '../../../domain/filepath_wrapper'
 import { log } from '../../../utils/logger'
 import InfoToast from '../../atoms/info_toast'
+import Loading from '../../atoms/loading'
 import FilePathList from '../../molecules/filepath_list'
 import CanvasArea, { CanvasAreaProps } from '../../organisms/canvas_area'
 
@@ -14,6 +15,7 @@ type Props = {
   onInfoToastClose: () => void
   onSaveShortcut: () => void
   infoToastMessage?: string
+  isLoading: boolean
 }
 
 const SegmentationTemplate = ({
@@ -24,6 +26,7 @@ const SegmentationTemplate = ({
   onInfoToastClose,
   onSaveShortcut,
   infoToastMessage = '',
+  isLoading = false,
 }: Props) => {
   log('Render on SegmentationTemplate')
 
@@ -75,6 +78,7 @@ const SegmentationTemplate = ({
         open={infoToastMessage !== ''}
         onClose={onInfoToastClose}
       />
+      <Loading open={isLoading} size={120} backgroundColor="rgba(0,0,0,0)" />
     </div>
   )
 }
