@@ -45,7 +45,7 @@ python run.py
 // for web frontend
 npm run prod-build
 // for python
-python -m eel labelcls/run.py labelpt/web --onefile --noconsole
+python -m eel run.py labelpt/web/build --onefile --noconsole
 ```
 
 ## Build for pypi
