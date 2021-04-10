@@ -44,6 +44,8 @@ storiesOf('templates/SegmentationTemplate', module).add('default', () => (
   <SegmentationTemplate
     isLoading={boolean('loading', false)}
     onSaveShortcut={action('save shortcut')}
+    errorMessage={text('error message', '')}
+    onErrorDialogClose={action('error dialog colose')}
     onFileClick={onFileClick}
     filePathList={filepathList}
     selectedFileIndex={1}

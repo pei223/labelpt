@@ -4,6 +4,7 @@ import FilePathWrapper from '../../../domain/filepath_wrapper'
 import { log } from '../../../utils/logger'
 import InfoToast from '../../atoms/info_toast'
 import Loading from '../../atoms/loading'
+import ErrorModal from '../../molecules/error_modal'
 import FilePathList from '../../molecules/filepath_list'
 import CanvasArea, { CanvasAreaProps } from '../../organisms/canvas_area'
 
@@ -16,6 +17,8 @@ type Props = {
   onSaveShortcut: () => void
   infoToastMessage?: string
   isLoading: boolean
+  errorMessage: string
+  onErrorDialogClose: () => void
 }
 
 const SegmentationTemplate = ({
@@ -27,6 +30,8 @@ const SegmentationTemplate = ({
   onSaveShortcut,
   infoToastMessage = '',
   isLoading = false,
+  errorMessage,
+  onErrorDialogClose,
 }: Props) => {
   log('Render on SegmentationTemplate')
 
@@ -79,6 +84,12 @@ const SegmentationTemplate = ({
         onClose={onInfoToastClose}
       />
       <Loading open={isLoading} size={120} backgroundColor="rgba(0,0,0,0)" />
+      <ErrorModal
+        open={errorMessage !== ''}
+        title="Error"
+        message={errorMessage}
+        onClose={onErrorDialogClose}
+      />
     </div>
   )
 }

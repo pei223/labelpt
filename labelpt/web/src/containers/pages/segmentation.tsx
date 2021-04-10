@@ -16,6 +16,7 @@ export const SegmentationPage = () => {
   const [annotationManager, _] = useState(new AnnotationManager())
   const [infoToastMessage, setInfoToastMessage] = useState<string>('')
   const [isLoading, setLoading] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const [imageInfo, setImageInfo] = useState<ImageInfo>({
     fileName: '',
@@ -25,9 +26,9 @@ export const SegmentationPage = () => {
     height: 400,
   })
 
-  const saveAnnotationResult = async () => {
+  const saveAnnotationResult = async (): Promise<boolean> => {
     const prevFilePath = state.filePathList[state.selectedFilePathIndex]
-    const result = await eel.save_annotation_result(
+    return await eel.save_annotation_result(
       state.saveAnnotationsPath?.filePath,
       prevFilePath.getFileName(),
       annotationManager.toBase64Image(
@@ -39,18 +40,46 @@ export const SegmentationPage = () => {
 
   const onFileRowClick = async (_: FilePathWrapper, index: number) => {
     setLoading(true)
-    saveAnnotationResult().then(() => {
-      dispatch(setSelectedFile(index))
-      setLoading(false)
-    })
+    saveAnnotationResult()
+      .then((result: boolean) => {
+        if (!result) {
+          errorLog('save annotation onFileRowClick result is false')
+          setErrorMessage('Save annotation result is failed.')
+          return
+        }
+      })
+      .catch((e: Error) => {
+        errorLog(
+          'Save annotation result is failed onFileRowClick. ' + e.message
+        )
+        setErrorMessage('Save annotation result is failed.')
+      })
+      .finally(() => {
+        dispatch(setSelectedFile(index))
+        setLoading(false)
+      })
   }
 
   const onSaveClick = () => {
     setLoading(true)
-    saveAnnotationResult().then(() => {
-      setInfoToastMessage('Saved!')
-      setLoading(false)
-    })
+    saveAnnotationResult()
+      .then((result: boolean) => {
+        if (!result) {
+          errorLog('save annotation onSaveClick result is false')
+          setErrorMessage(
+            'Save annotation result is failed. Result image is null.'
+          )
+          return
+        }
+        setInfoToastMessage('Saved!')
+      })
+      .catch((e: Error) => {
+        errorLog('Save annotation result is failed onSaveClick. ' + e.message)
+        setErrorMessage('Save annotation result is failed.')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const loadFilePathList = async () => {
@@ -59,7 +88,7 @@ export const SegmentationPage = () => {
     )()
     if (filepathList === null) {
       errorLog('filepathlist null')
-      // TODO エラーダイアログ
+      setErrorMessage('Load filepath list is failed. filepathList is null')
       return
     }
     const filePathWrapperList = filepathList.map(
@@ -71,10 +100,17 @@ export const SegmentationPage = () => {
   useEffect(() => {
     log('Fetch file path list')
     setLoading(true)
-    loadFilePathList().then(() => {
-      setLoading(false)
-      dispatch(setSelectedFile(0))
-    })
+    loadFilePathList()
+      .then(() => {
+        dispatch(setSelectedFile(0))
+      })
+      .catch((e: Error) => {
+        errorLog('loadFilePathList error. ' + e.message)
+        setErrorMessage('Load filepath is failed.')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
   // 選択されたファイルインデックスにフック
@@ -90,7 +126,12 @@ export const SegmentationPage = () => {
         filePath.filePath,
         state.saveAnnotationsPath?.filePath
       )()
-      .then((imageInfo: [string, string, number, number]) => {
+      .then((imageInfo: [string, string, number, number] | null) => {
+        if (imageInfo === null) {
+          errorLog('imageinfo is null')
+          setErrorMessage('Load image is failed.')
+          return
+        }
         setImageInfo({
           fileName: filePath.getFileName(),
           imageSrc: imageInfo[0],
@@ -98,6 +139,12 @@ export const SegmentationPage = () => {
           width: imageInfo[2],
           height: imageInfo[3],
         })
+      })
+      .catch((e: Error) => {
+        errorLog('Error on load image. ' + e.message)
+        setErrorMessage('Load image is failed.')
+      })
+      .finally(() => {
         setLoading(false)
       })
   }, [state.selectedFilePathIndex])
@@ -119,6 +166,8 @@ export const SegmentationPage = () => {
       selectedFileIndex={state.selectedFilePathIndex}
       canvasAreaProps={canvasAreaProps}
       isLoading={isLoading}
+      errorMessage={errorMessage}
+      onErrorDialogClose={() => setErrorMessage('')}
     />
   )
 }
