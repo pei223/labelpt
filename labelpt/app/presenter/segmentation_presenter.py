@@ -20,7 +20,7 @@ def load_img_and_annotation_and_width_height(image_filepath: str, annotation_dir
     """
     image_filepath = Path(image_filepath)
     if not image_filepath.exists():
-        messagebox.showwarning("Warning", f"{image_filepath} is not exist.")
+        print(f"image file is not exists, {image_filepath}")
         return None
 
     b64_img, width, height = _load_base64_image_and_size(str(image_filepath))

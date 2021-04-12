@@ -1,6 +1,11 @@
 import React from 'react'
-import { DialogContent, DialogContentText, DialogTitle, Dialog, Grid } from '@material-ui/core';
-import { Warning } from '@material-ui/icons';
+import {
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Dialog,
+} from '@material-ui/core'
+import { Warning } from '@material-ui/icons'
 
 export type ErrorModalProps = {
   title: string
@@ -8,7 +13,6 @@ export type ErrorModalProps = {
   open: boolean
   onClose: () => void
 }
-
 
 const ErrorModal = ({ title, message, open, onClose }: ErrorModalProps) => {
   return (
@@ -18,13 +22,15 @@ const ErrorModal = ({ title, message, open, onClose }: ErrorModalProps) => {
       open={open}
       onClose={() => onClose()}>
       <DialogTitle id="modal-title">
-        <Warning fontSize="large" style={{ color: "red", verticalAlign: "middle" }} />
+        <Warning
+          fontSize="large"
+          color="error"
+          style={{ verticalAlign: 'middle' }}
+        />
         &nbsp;&nbsp;&nbsp;{title}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="modal-description">
-          {message}
-        </DialogContentText>
+        <DialogContentText id="modal-description">{message}</DialogContentText>
       </DialogContent>
     </Dialog>
   )

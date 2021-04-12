@@ -1,0 +1,3 @@
+from .test_image_process import TestImageProcess
+from .test_initial_setting_presenter import TestInitialSettingPresenter
+from .test_segmentation_presenter import TestSegmentationPresenter

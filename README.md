@@ -59,3 +59,9 @@ twine upload --repository testpypi dist/*
 # upload
 twine upload dist/*
 ```
+
+## Test
+
+```
+python -m unittest test
+```
