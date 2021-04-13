@@ -22,7 +22,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: cd labelpt/web
-    - run: npm ci
     - name: Install dependencies
       run: npm install
     - name: unit test
