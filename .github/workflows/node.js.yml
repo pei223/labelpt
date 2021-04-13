@@ -21,10 +21,12 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd labelpt/web
     - name: Install dependencies
+      working-directory: ./labelpt/web
       run: npm install
     - name: unit test
+      working-directory: ./labelpt/web
       run: npm run test
     - name: build test
+      working-directory: ./labelpt/web
       run: npm run dev-build
