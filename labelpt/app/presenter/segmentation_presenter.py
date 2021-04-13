@@ -2,7 +2,6 @@ from typing import List, Tuple, Optional
 import eel
 import numpy as np
 from pathlib import Path
-from tkinter import messagebox
 from PIL import Image
 import base64
 from io import BytesIO
@@ -63,6 +62,9 @@ def load_filepath_list(dir_path: str) -> List[str]:
 @eel.expose
 def save_annotation_result(save_dir: str, filename: str, b64_result_img: Optional[str], label_num: int) -> bool:
     if b64_result_img is None or b64_result_img == "":
+        return False
+    if not Path(save_dir).exists():
+        print(f"Path {save_dir} is not exists.")
         return False
     save_file_path = Path(save_dir).joinpath(Path(filename).stem + ".png")
     rgba_img = Image.open(BytesIO(base64.b64decode(b64_result_img)))

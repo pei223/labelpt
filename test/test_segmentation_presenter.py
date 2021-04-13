@@ -6,7 +6,6 @@ import unittest
 import numpy as np
 from PIL import Image
 import os
-from pathlib import Path
 
 
 class TestSegmentationPresenter(unittest.TestCase):
@@ -47,3 +46,21 @@ class TestSegmentationPresenter(unittest.TestCase):
     def test_load_image_with_no_file(self):
         result = segmentation_presenter.load_img_and_annotation_and_width_height("aaaaaaaaaaaaaaa.jpg", self.test_dir)
         self.assertTrue(result is None)
+
+    def test_load_filepath_list(self):
+        result = segmentation_presenter.load_filepath_list(self.test_dir)
+        self.assertTrue(isinstance(result, list))
+        self.assertEqual(len(result), 3)
+
+    def test_save_annotation_result_with_not_exist_dir(self):
+        result = segmentation_presenter.save_annotation_result("hoge", "", "aaaaaaaaaaaaaa", 5)
+        self.assertFalse(result)
+
+    def test_save_annotation_result_with_no_img(self):
+        result = segmentation_presenter.save_annotation_result(self.test_dir, "", "", 5)
+        self.assertFalse(result)
+        result = segmentation_presenter.save_annotation_result(self.test_dir, "", None, 5)
+        self.assertFalse(result)
+
+    def test_save_annotation(self):
+        pass

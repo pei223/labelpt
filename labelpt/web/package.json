@@ -46,7 +46,7 @@
     "start": "dotenv -e .env.dev react-scripts start -p 14141",
     "dev-build": "dotenv -e .env.dev react-scripts build",
     "prod-build": "dotenv -e .env.prod react-scripts build",
-    "test": "react-scripts test",
+    "test": "dotenv -e .env.dev react-scripts test",
     "eject": "react-scripts eject",
     "type-check": "tsc",
     "reset-storybook": "npx sb init -f",
@@ -72,20 +72,11 @@
     ]
   },
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
     "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.json"
-      }
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testMatch": [
-      "**/tests/**/*.test.ts"
+      "**/tests/**/*.test.(ts|tsx)"
     ]
   }
 }
