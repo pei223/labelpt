@@ -7,7 +7,8 @@ on: [push]
 
 jobs:
   build:
-
+    env:
+      CI: false
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,6 +28,9 @@ jobs:
     - name: unit test
       working-directory: ./labelpt/web
       run: npm run test
+    - name: type check
+      working-directory: ./labelpt/web
+      run: npm run type-check
     - name: build test
       working-directory: ./labelpt/web
       run: npm run dev-build
