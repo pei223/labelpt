@@ -13,6 +13,10 @@ export class PaintMode extends Mode {
   onMouseMove(x: number, y: number, label: Label): void {
     this.clearHighlight()
     if (!this.isMouseDowning) {
+      if (label.isBackground()) {
+        this.drawBackgroundHighlightCircle(x, y)
+        return
+      }
       this.drawCircle(x, y, label, this.contextSet?.highlightContext)
       return
     }
@@ -43,6 +47,30 @@ export class PaintMode extends Mode {
     context.globalCompositeOperation = label.isBackground()
       ? 'destination-out'
       : 'source-over'
+    context.fill()
+  }
+
+  private drawBackgroundHighlightCircle(x: number, y: number) {
+    const context = this.contextSet?.highlightContext
+    if (!context) {
+      errorLog('Context is null on drawBackgroundHighlightCircle.')
+      return
+    }
+    context.beginPath()
+    context.globalCompositeOperation = 'source-over'
+    context.fillStyle = 'white'
+    context.arc(x, y, this.brushSize + 1, 0, (360 * Math.PI) / 180, false)
+    context.fill()
+    context.beginPath()
+    context.fillStyle = 'black'
+    context.arc(
+      x,
+      y,
+      this.brushSize - this.brushSize / 3 + 1,
+      0,
+      (360 * Math.PI) / 180,
+      false
+    )
     context.fill()
   }
 }
