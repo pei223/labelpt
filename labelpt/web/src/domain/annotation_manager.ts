@@ -1,7 +1,6 @@
 import Label from './label'
 import { Mode, ContextSet } from './annotation_mode/base'
 import { EmptyMode } from './annotation_mode/empty'
-import { errorLog } from '../utils/logger'
 
 export class AnnotationManager {
   label: Label
@@ -18,6 +17,7 @@ export class AnnotationManager {
 
   changeMode(mode: Mode) {
     this.mode = mode
+    this.mode.clearHighlight()
   }
 
   setImage(

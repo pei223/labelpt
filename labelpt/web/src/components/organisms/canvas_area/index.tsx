@@ -6,6 +6,7 @@ import LabelList, { LabelListProps } from '../../molecules/label_list'
 import LayerImage, { ImageInfo } from '../../molecules/layer_image'
 import { Box } from '@material-ui/core'
 import { PaintMode } from '../../../domain/annotation_mode/paint'
+import { PolygonMode } from '../../../domain/annotation_mode/polygon'
 import ToolBox from '../toolbox'
 import {
   PAINT_MODE_INDEX,
@@ -30,15 +31,15 @@ const DEFAULT_ALPHA = 0.5
 const modes = [
   {
     index: PAINT_MODE_INDEX,
-    name: 'paint',
+    name: 'Paint',
   },
   {
     index: POLIGON_MODE_INDEX,
-    name: 'poligon',
+    name: 'Polygon',
   },
   {
     index: REGION_MODE_INDEX,
-    name: 'region',
+    name: 'Region',
   },
 ]
 
@@ -111,6 +112,15 @@ const CanvasArea = ({
     if (modeIndex === PAINT_MODE_INDEX) {
       annotationManager.changeMode(
         new PaintMode(
+          prevMode.contextSet,
+          prevMode.brushSize,
+          prevMode.width,
+          prevMode.height
+        )
+      )
+    } else if (modeIndex === POLIGON_MODE_INDEX) {
+      annotationManager.changeMode(
+        new PolygonMode(
           prevMode.contextSet,
           prevMode.brushSize,
           prevMode.width,
