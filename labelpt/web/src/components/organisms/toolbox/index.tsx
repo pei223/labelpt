@@ -8,33 +8,33 @@ export interface ModeInfo {
 }
 
 export type Props = {
-  brushSize: number
-  onBrushSizeChange: (size: number) => void
-  modeIndex: number
   modeValues: ModeInfo[]
-  onModeIndexChange: (index: number) => void
+  modeIndex: number
+  brushSize: number
   alpha: number
-  onAlphaChange: (alpha: number) => void
   zoomRate: number
+  width?: string
+  onModeIndexChange: (index: number) => void
+  onBrushSizeChange: (size: number) => void
+  onAlphaChange: (alpha: number) => void
   onZoomIn: () => void
   onZoomOut: () => void
-  width?: string
   onUndo: () => void
   onRedo: () => void
 }
 
 const ToolBox = ({
-  brushSize,
-  onBrushSizeChange,
-  modeIndex,
   modeValues,
-  onModeIndexChange,
+  modeIndex,
+  brushSize,
   alpha,
-  onAlphaChange,
   zoomRate,
+  width = '300px',
+  onModeIndexChange,
+  onBrushSizeChange,
+  onAlphaChange,
   onZoomIn,
   onZoomOut,
-  width = '300px',
   onUndo,
   onRedo,
 }: Props) => {

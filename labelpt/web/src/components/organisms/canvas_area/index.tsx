@@ -18,11 +18,11 @@ export type CanvasAreaProps = {
   annotationManager: AnnotationManager
   imageInfo: ImageInfo
   labelList: Label[]
-  onSaveClick: () => void
   canvasWidth?: string
   canvasHeight?: string
   labelAreaWidth?: string
   labelListHeight?: string
+  onSaveClick: () => void
 }
 
 const DEFAULT_BRUSH_SIZE = 10
@@ -47,11 +47,11 @@ const CanvasArea = ({
   annotationManager,
   imageInfo,
   labelList,
-  onSaveClick,
   canvasWidth = '600px',
   canvasHeight = '600px',
   labelAreaWidth = '300px',
   labelListHeight: labelAreaHeight = '400px',
+  onSaveClick,
 }: CanvasAreaProps) => {
   log('Render on CanvasArea')
 

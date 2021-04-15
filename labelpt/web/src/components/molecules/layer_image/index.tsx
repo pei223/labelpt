@@ -87,7 +87,6 @@ const LayerImage = ({
       log('src null')
       return
     }
-    log('Set context')
     annotationManager.setContextSet({
       imageContext: getContext('image-layer'),
       annotationContext: getContext('annotated-layer'),
