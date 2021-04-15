@@ -25,6 +25,11 @@ const propsEquals = (props1: ImageProps, props2: ImageProps): boolean => {
   return props1.imageInfo === props2.imageInfo
 }
 
+const getContext = (id: string): CanvasRenderingContext2D => {
+  const canvas: any = document.getElementById(id)
+  return canvas.getContext('2d')
+}
+
 const LayerImage = ({
   imageInfo,
   onSaveClick,
@@ -34,9 +39,21 @@ const LayerImage = ({
 }: ImageProps) => {
   log('Render on LayerImage')
 
-  const getContext = (id: string): CanvasRenderingContext2D => {
-    const canvas: any = document.getElementById(id)
-    return canvas.getContext('2d')
+  const onMouseDown = (e: MouseEvent) => {
+    annotationManager
+      .getMode()
+      .onMouseDown(e.offsetX, e.offsetY, annotationManager.getLabel())
+  }
+  const onMouseMove = (e: MouseEvent) => {
+    annotationManager
+      .getMode()
+      .onMouseMove(e.offsetX, e.offsetY, annotationManager.getLabel())
+  }
+  const onMouseUp = (e: MouseEvent) => {
+    annotationManager.getMode().onMouseUp(e.offsetX, e.offsetY)
+  }
+  const onMouseLeave = (e: MouseEvent) => {
+    annotationManager.getMode().onMouseLeave()
   }
 
   const bindEvent = () => {
@@ -45,28 +62,23 @@ const LayerImage = ({
       errorLog('layer-container not found')
       return
     }
-    // TODO 必要なイベントを増やしていく
-    node.addEventListener('mousedown', (e) => {
-      annotationManager.mode.onMouseDown(
-        e.offsetX,
-        e.offsetY,
-        annotationManager.label
-      )
-    })
-    node.addEventListener('mousemove', (e) => {
-      annotationManager.mode.onMouseMove(
-        e.offsetX,
-        e.offsetY,
-        annotationManager.label
-      )
-    })
-    node.addEventListener('mouseup', (e) => {
-      annotationManager.mode.onMouseUp(e.offsetX, e.offsetY)
-    })
-    node.addEventListener('mouseleave', (e) => {
-      annotationManager.mode.onMouseLeave()
-    })
+    node.addEventListener('mousedown', onMouseDown)
+    node.addEventListener('mousemove', onMouseMove)
+    node.addEventListener('mouseup', onMouseUp)
+    node.addEventListener('mouseleave', onMouseLeave)
     log('Event binded')
+  }
+
+  const unBindEvent = () => {
+    const node = document.getElementById('layer-container')
+    if (node === null || node === undefined) {
+      errorLog('layer-container not found')
+      return
+    }
+    node.removeEventListener('mousedown', onMouseDown)
+    node.removeEventListener('mousemove', onMouseMove)
+    node.removeEventListener('mouseup', onMouseUp)
+    node.removeEventListener('mouseleave', onMouseLeave)
   }
 
   useEffect(() => {
@@ -82,13 +94,14 @@ const LayerImage = ({
       regionContext: getContext('region-layer'),
       highlightContext: getContext('highlight-layer'),
     })
-    annotationManager.setImage(
+    annotationManager.changeImage(
       imageInfo.imageSrc,
       imageInfo.annotationImgSrc,
       imageInfo.width,
       imageInfo.height
     )
     bindEvent()
+    return () => unBindEvent()
   }, [imageInfo])
 
   return (

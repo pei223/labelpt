@@ -19,13 +19,14 @@ const filepathList = [
   new FilePathWrapper('dasklfj;dsa/fdjaslkf;/eee.png'),
 ]
 
+const annotationManager = new AnnotationManager()
+
 const canvasAreaProps: CanvasAreaProps = {
-  annotationManager: new AnnotationManager(),
+  annotationManager: annotationManager,
   imageInfo: {
     fileName: 'test',
     imageSrc: 'https://tadworks.jp/wp-content/uploads/2020/08/profile_icon.png',
-    annotationImgSrc:
-      'https://assets.st-note.com/production/uploads/images/14122235/picture_pc_247b05ada2141579fba2b2da58d54dc0.png',
+    annotationImgSrc: '',
     width: 400,
     height: 400,
   },
@@ -50,6 +51,8 @@ storiesOf('templates/SegmentationTemplate', module).add('default', () => (
     filePathList={filepathList}
     selectedFileIndex={1}
     canvasAreaProps={canvasAreaProps}
+    onRedoShortcut={() => annotationManager.getMode().redo()}
+    onUndoShortcut={() => annotationManager.getMode().undo()}
     infoToastMessage={text('toast message', '')}
     onInfoToastClose={action('close info toast')}
   />

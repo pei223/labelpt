@@ -24,6 +24,16 @@ export class PaintMode extends Mode {
   }
 
   onMouseUp(x: number, y: number): void {
+    if (this.isMouseDowning && this.contextSet !== null) {
+      this.imageHistoryController.pushHistory(
+        this.contextSet.annotationContext.getImageData(
+          0,
+          0,
+          this.width,
+          this.height
+        )
+      )
+    }
     this.isMouseDowning = false
   }
 

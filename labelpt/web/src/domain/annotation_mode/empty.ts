@@ -1,10 +1,11 @@
 import { log } from '../../utils/logger'
 import Label from '../label'
+import HistoryController from '../operation_history'
 import { Mode } from './base'
 
 export class EmptyMode extends Mode {
-  constructor() {
-    super(null, 1, 0, 0)
+  constructor(imageHistoryController: HistoryController<ImageData>) {
+    super(null, 1, 0, 0, imageHistoryController)
   }
 
   onMouseDown(x: number, y: number, label: Label): void {

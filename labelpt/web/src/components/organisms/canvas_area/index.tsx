@@ -70,7 +70,8 @@ const CanvasArea = ({
         annotationManager.getContextSet(),
         brushSize,
         imageInfo.width,
-        imageInfo.height
+        imageInfo.height,
+        annotationManager.getImageHistoryController()
       )
     )
     onAlphaChange(alpha)
@@ -108,14 +109,15 @@ const CanvasArea = ({
 
   const onModeIndexChange = (modeIndex: number) => {
     // TODO モード増やしたらここでchangeMode追加
-    const prevMode = annotationManager.mode
+    const prevMode = annotationManager.getMode()
     if (modeIndex === PAINT_MODE_INDEX) {
       annotationManager.changeMode(
         new PaintMode(
           prevMode.contextSet,
           prevMode.brushSize,
           prevMode.width,
-          prevMode.height
+          prevMode.height,
+          annotationManager.getImageHistoryController()
         )
       )
     } else if (modeIndex === POLIGON_MODE_INDEX) {
@@ -124,7 +126,8 @@ const CanvasArea = ({
           prevMode.contextSet,
           prevMode.brushSize,
           prevMode.width,
-          prevMode.height
+          prevMode.height,
+          annotationManager.getImageHistoryController()
         )
       )
     }
@@ -133,7 +136,7 @@ const CanvasArea = ({
 
   const onBrushSizeChange = (brushSize: number) => {
     setBrushSize(brushSize)
-    annotationManager.mode.setBrushSize(brushSize)
+    annotationManager.getMode().setBrushSize(brushSize)
   }
 
   const changeZoomRate = (newValue: number) => {
@@ -185,6 +188,8 @@ const CanvasArea = ({
           zoomRate={zoomRate}
           onZoomIn={() => changeZoomRate(zoomRate + 0.1)}
           onZoomOut={() => changeZoomRate(zoomRate - 0.1)}
+          onRedo={() => annotationManager.getMode().redo()}
+          onUndo={() => annotationManager.getMode().undo()}
         />
       </Box>
       <Box p={1} css={{ width: labelAreaWidth }}>

@@ -9,28 +9,32 @@ import FilePathList from '../../molecules/filepath_list'
 import CanvasArea, { CanvasAreaProps } from '../../organisms/canvas_area'
 
 type Props = {
-  filePathList: FilePathWrapper[]
-  onFileClick: (filePath: FilePathWrapper, index: number) => void
-  selectedFileIndex: number
   canvasAreaProps: CanvasAreaProps
-  onInfoToastClose: () => void
-  onSaveShortcut: () => void
+  filePathList: FilePathWrapper[]
+  selectedFileIndex: number
   infoToastMessage?: string
   isLoading: boolean
   errorMessage: string
+  onFileClick: (filePath: FilePathWrapper, index: number) => void
+  onSaveShortcut: () => void
+  onUndoShortcut: () => void
+  onRedoShortcut: () => void
+  onInfoToastClose: () => void
   onErrorDialogClose: () => void
 }
 
 const SegmentationTemplate = ({
-  filePathList,
-  onFileClick,
-  selectedFileIndex,
   canvasAreaProps,
-  onInfoToastClose,
-  onSaveShortcut,
+  filePathList,
+  selectedFileIndex,
   infoToastMessage = '',
   isLoading = false,
   errorMessage,
+  onFileClick,
+  onSaveShortcut,
+  onUndoShortcut,
+  onRedoShortcut,
+  onInfoToastClose,
   onErrorDialogClose,
 }: Props) => {
   log('Render on SegmentationTemplate')
@@ -39,9 +43,13 @@ const SegmentationTemplate = ({
     if (!event.ctrlKey) {
       return
     }
+    event.preventDefault()
     if (event.key === 's') {
-      event.preventDefault()
       onSaveShortcut()
+    } else if (event.key === 'y') {
+      onRedoShortcut()
+    } else if (event.key === 'z') {
+      onUndoShortcut()
     }
   }
 

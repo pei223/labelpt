@@ -158,15 +158,17 @@ export const SegmentationPage = () => {
 
   return (
     <SegmentationTemplate
-      onSaveShortcut={onSaveClick}
-      infoToastMessage={infoToastMessage}
-      onInfoToastClose={() => setInfoToastMessage('')}
-      onFileClick={onFileRowClick}
+      canvasAreaProps={canvasAreaProps}
       filePathList={state.filePathList}
       selectedFileIndex={state.selectedFilePathIndex}
-      canvasAreaProps={canvasAreaProps}
+      infoToastMessage={infoToastMessage}
       isLoading={isLoading}
       errorMessage={errorMessage}
+      onFileClick={onFileRowClick}
+      onSaveShortcut={onSaveClick}
+      onRedoShortcut={() => annotationManager.getMode().redo()}
+      onUndoShortcut={() => annotationManager.getMode().undo()}
+      onInfoToastClose={() => setInfoToastMessage('')}
       onErrorDialogClose={() => setErrorMessage('')}
     />
   )

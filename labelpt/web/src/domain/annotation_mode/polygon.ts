@@ -1,5 +1,6 @@
-import { errorLog } from '../../utils/logger'
+import { errorLog, log } from '../../utils/logger'
 import Label from '../label'
+import HistoryController from '../operation_history'
 import { Mode } from './base'
 
 interface Point {
@@ -7,18 +8,38 @@ interface Point {
   y: number
 }
 
+const POLYGON_MAX_HISTORIES = 30
+
 export class PolygonMode extends Mode {
   polygonPoints: Point[] = []
+  polygonHistoryController: HistoryController<Point[]> = new HistoryController(
+    POLYGON_MAX_HISTORIES
+  )
 
   onMouseDown(x: number, y: number, label: Label): void {
     if (this.isStartPointClicked(x, y)) {
+      log('Create polygon')
       this.applyPolygonToAnnotation(label)
-      this.polygonPoints = []
-      this.clearHighlight()
+      this.clearModeParams()
+      if (this.contextSet === null) {
+        return
+      }
+      this.imageHistoryController.pushHistory(
+        this.contextSet.annotationContext.getImageData(
+          0,
+          0,
+          this.width,
+          this.height
+        )
+      )
       return
+    }
+    if (this.polygonPoints.length === 0) {
+      this.polygonHistoryController.pushHistory([])
     }
     this.polygonPoints.push({ x: x, y: y })
     this.drawHighLight()
+    this.polygonHistoryController.pushHistory([...this.polygonPoints])
   }
 
   onMouseMove(x: number, y: number, label: Label): void {
@@ -32,6 +53,41 @@ export class PolygonMode extends Mode {
   }
 
   onMouseUp(x: number, y: number): void {}
+
+  undo() {
+    const prevPolygonPoints = this.polygonHistoryController.undo()
+    if (prevPolygonPoints === null) {
+      // ポリゴンをすべてundoしたらポリゴン情報をすべて消す
+      this.clearModeParams()
+      super.undo()
+      return
+    }
+    this.polygonPoints = [...prevPolygonPoints]
+    this.drawHighLight()
+  }
+
+  redo() {
+    const nextPolygonPoints = this.polygonHistoryController.redo()
+    if (nextPolygonPoints === null) {
+      if (this.polygonPoints.length === 0) {
+        super.redo()
+      }
+      return
+    }
+    this.polygonPoints = [...nextPolygonPoints]
+    this.drawHighLight()
+  }
+
+  clearHistory() {
+    super.clearHistory()
+    this.polygonHistoryController.clear()
+  }
+
+  clearModeParams() {
+    super.clearModeParams()
+    this.polygonHistoryController.clear()
+    this.polygonPoints = []
+  }
 
   private isStartPointClicked(x: number, y: number) {
     return (

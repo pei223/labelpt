@@ -26,5 +26,7 @@ storiesOf('molecules/Toolbox', module).add('default', () => (
       },
     ]}
     onModeIndexChange={action('mode change')}
+    onRedo={action('Redo')}
+    onUndo={action('Undo')}
   />
 ))

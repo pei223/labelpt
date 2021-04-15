@@ -1,6 +1,6 @@
 import React from 'react'
 import { MenuItem, Paper, Select, Slider, IconButton } from '@material-ui/core'
-import { ZoomOut, ZoomIn } from '@material-ui/icons'
+import { ZoomOut, ZoomIn, Undo, Redo } from '@material-ui/icons'
 
 export interface ModeInfo {
   index: number
@@ -19,6 +19,8 @@ export type Props = {
   onZoomIn: () => void
   onZoomOut: () => void
   width?: string
+  onUndo: () => void
+  onRedo: () => void
 }
 
 const ToolBox = ({
@@ -33,6 +35,8 @@ const ToolBox = ({
   onZoomIn,
   onZoomOut,
   width = '300px',
+  onUndo,
+  onRedo,
 }: Props) => {
   const alphaSlider = () => {
     return (
@@ -94,7 +98,7 @@ const ToolBox = ({
   const modeSelect = () => {
     return (
       <Select
-        style={{ width: '100%' }}
+        style={{ width: '100%', textAlign: 'left' }}
         labelId="demo-simple-select-filled-label"
         id="demo-simple-select-filled"
         value={modeIndex}
@@ -120,16 +124,32 @@ const ToolBox = ({
     )
   }
 
+  const undoRedo = () => {
+    return (
+      <div>
+        <IconButton onClick={() => onUndo()}>
+          <Undo />
+        </IconButton>
+        <IconButton onClick={() => onRedo()}>
+          <Redo />
+        </IconButton>
+      </div>
+    )
+  }
+
   return (
     <Paper style={{ padding: '15px', width: width, display: 'flex' }}>
       <div style={{ width: '75%', paddingRight: '5%' }}>
         {alphaSlider()}
         {brushSlider()}
       </div>
-      <div style={{ display: 'inline-block', width: '20%' }}>
+      <div
+        style={{ display: 'inline-block', width: '20%', textAlign: 'center' }}>
         {modeSelect()}
         <div style={{ paddingTop: '20px' }}></div>
         {zoom()}
+        <div style={{ paddingTop: '20px' }}></div>
+        {undoRedo()}
       </div>
     </Paper>
   )
