@@ -30,27 +30,21 @@ npm run build-storybook
 npm run storybook
 ```
 
-## Run
+## dev run
 
 ```
-// for web frontend
-npm run dev-build
-// Fix build/index.html /static/~ -> ./static/~
+// web develop build and run app.
+python dev_run.py
+// web develop build only
+python build.py -dev
+// run app only
 python run.py
-```
-
-## Build
-
-```
-// for web frontend
-npm run prod-build
-// for python
-python -m eel run.py labelpt/web/build --onefile --noconsole
 ```
 
 ## Build for pypi
 
 ```
+python build.py
 python setup.py sdist bdist_wheel
 # check
 twine check dist/*

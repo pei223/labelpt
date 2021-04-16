@@ -120,6 +120,7 @@ export class PolygonMode extends Mode {
     context.lineTo(this.polygonPoints[0].x, this.polygonPoints[0].y)
     context.fill()
     context.closePath()
+    context.globalCompositeOperation = 'source-over'
   }
 
   private drawHighLight() {

@@ -1,9 +1,14 @@
-import os
 import socket
 from tkinter import Tk
 from tkinter import messagebox
 import eel
+from dev_util import build_web, rewrite_file_path
 from labelpt.app.presenter import *  # required
+import os
+
+root = Tk()
+root.attributes('-topmost', True)
+root.withdraw()
 
 
 def is_port_used(host: str, port: int) -> bool:
@@ -13,14 +18,9 @@ def is_port_used(host: str, port: int) -> bool:
     return result_code == 0
 
 
-def disable_tk_window():
-    root = Tk()
-    root.attributes('-topmost', True)
-    root.withdraw()
-
-
 def main():
-    disable_tk_window()
+    build_web()
+    rewrite_file_path()
     port = 14141
     host = "localhost"
     if is_port_used(host, port):
@@ -30,4 +30,5 @@ def main():
     eel.start("index.html", port=port)
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -58,6 +58,8 @@ export class PaintMode extends Mode {
       ? 'destination-out'
       : 'source-over'
     context.fill()
+    context.closePath()
+    context.globalCompositeOperation = 'source-over'
   }
 
   private drawBackgroundHighlightCircle(x: number, y: number) {
@@ -82,5 +84,6 @@ export class PaintMode extends Mode {
       false
     )
     context.fill()
+    context.closePath()
   }
 }

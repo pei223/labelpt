@@ -89,6 +89,7 @@ export abstract class Mode {
     }
     this.contextSet.annotationContext.clearRect(0, 0, width, height)
     if (annotationImgSrc === null) {
+      log('No annotation image')
       this.imageHistoryController.pushHistory(
         this.contextSet.annotationContext.getImageData(0, 0, width, height)
       )
@@ -111,6 +112,7 @@ export abstract class Mode {
       this.imageHistoryController.pushHistory(
         this.contextSet.annotationContext.getImageData(0, 0, width, height)
       )
+      log('Draw annotation image.')
     }
   }
 

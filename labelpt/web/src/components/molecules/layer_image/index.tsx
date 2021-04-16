@@ -66,7 +66,6 @@ const LayerImage = ({
     node.addEventListener('mousemove', onMouseMove)
     node.addEventListener('mouseup', onMouseUp)
     node.addEventListener('mouseleave', onMouseLeave)
-    log('Event binded')
   }
 
   const unBindEvent = () => {

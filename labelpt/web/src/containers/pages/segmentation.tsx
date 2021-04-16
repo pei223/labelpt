@@ -9,11 +9,12 @@ import { CanvasAreaProps } from '../../components/organisms/canvas_area'
 import { errorLog, log } from '../../utils/logger'
 import { AnnotationManager } from '../../domain/annotation_manager'
 
+const annotationManager = new AnnotationManager()
+
 export const SegmentationPage = () => {
   log('Render on SegmentationPage')
 
   const { state, dispatch } = useContext(AppContext)
-  const [annotationManager, _] = useState(new AnnotationManager())
   const [infoToastMessage, setInfoToastMessage] = useState<string>('')
   const [isLoading, setLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
