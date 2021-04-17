@@ -12,7 +12,11 @@ import {
   PAINT_MODE_INDEX,
   POLIGON_MODE_INDEX,
   REGION_MODE_INDEX,
+  CIRCLE_MODE_INDEX,
+  RECT_MODE_INDEX,
+  LINE_MODE_INDEX,
 } from '../../../domain/annotation_mode/base'
+import { CircleMode } from '../../../domain/annotation_mode/circle'
 
 export type CanvasAreaProps = {
   annotationManager: AnnotationManager
@@ -40,6 +44,18 @@ const modes = [
   {
     index: REGION_MODE_INDEX,
     name: 'Region',
+  },
+  {
+    index: CIRCLE_MODE_INDEX,
+    name: 'Circle',
+  },
+  {
+    index: RECT_MODE_INDEX,
+    name: 'Rect',
+  },
+  {
+    index: LINE_MODE_INDEX,
+    name: 'line',
   },
 ]
 
@@ -123,6 +139,16 @@ const CanvasArea = ({
     } else if (modeIndex === POLIGON_MODE_INDEX) {
       annotationManager.changeMode(
         new PolygonMode(
+          prevMode.contextSet,
+          prevMode.brushSize,
+          prevMode.width,
+          prevMode.height,
+          annotationManager.getImageHistoryController()
+        )
+      )
+    } else if (modeIndex === CIRCLE_MODE_INDEX) {
+      annotationManager.changeMode(
+        new CircleMode(
           prevMode.contextSet,
           prevMode.brushSize,
           prevMode.width,

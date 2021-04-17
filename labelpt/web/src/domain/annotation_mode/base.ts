@@ -2,6 +2,11 @@ import { log, errorLog } from '../../utils/logger'
 import Label from '../label'
 import HistoryController from '../operation_history'
 
+export interface Point {
+  x: number
+  y: number
+}
+
 export interface ContextSet {
   imageContext: CanvasRenderingContext2D
   annotationContext: CanvasRenderingContext2D
@@ -12,6 +17,9 @@ export interface ContextSet {
 export const PAINT_MODE_INDEX = 0
 export const POLIGON_MODE_INDEX = 1
 export const REGION_MODE_INDEX = 2
+export const CIRCLE_MODE_INDEX = 3
+export const RECT_MODE_INDEX = 4
+export const LINE_MODE_INDEX = 5
 
 export abstract class Mode {
   contextSet: ContextSet | null
@@ -155,5 +163,49 @@ export abstract class Mode {
 
   protected clearHighlight() {
     this.contextSet?.highlightContext.clearRect(0, 0, this.width, this.height)
+  }
+
+  protected drawBackgroundCircle(
+    x: number,
+    y: number,
+    rad: number,
+    context?: CanvasRenderingContext2D
+  ) {
+    if (!context) {
+      errorLog('Context is null on drawBackgroundHighlightCircle.')
+      return
+    }
+    context.beginPath()
+    context.globalCompositeOperation = 'source-over'
+    context.fillStyle = 'white'
+    context.arc(x, y, rad, 0, (360 * Math.PI) / 180, false)
+    context.fill()
+    context.beginPath()
+    context.fillStyle = 'black'
+    context.arc(x, y, rad - rad / 5 + 1, 0, (360 * Math.PI) / 180, false)
+    context.fill()
+    context.closePath()
+  }
+
+  protected drawCircle(
+    x: number,
+    y: number,
+    rad: number,
+    label: Label,
+    context?: CanvasRenderingContext2D
+  ) {
+    if (!context) {
+      errorLog('Context is null.')
+      return
+    }
+    context.beginPath()
+    context.arc(x, y, rad, 0, (360 * Math.PI) / 180, false)
+    context.fillStyle = label.getAnnotationRGBString()
+    context.globalCompositeOperation = label.isBackground()
+      ? 'destination-out'
+      : 'source-over'
+    context.fill()
+    context.closePath()
+    context.globalCompositeOperation = 'source-over'
   }
 }

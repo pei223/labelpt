@@ -1,12 +1,7 @@
 import { errorLog, log } from '../../utils/logger'
 import Label from '../label'
 import HistoryController from '../operation_history'
-import { Mode } from './base'
-
-interface Point {
-  x: number
-  y: number
-}
+import { Mode, Point } from './base'
 
 const POLYGON_MAX_HISTORIES = 30
 
@@ -165,7 +160,7 @@ export class PolygonMode extends Mode {
     context.arc(
       point.x,
       point.y,
-      this.brushSize + 1,
+      this.brushSize / 2 + 1,
       0,
       (360 * Math.PI) / 180,
       false
@@ -176,7 +171,7 @@ export class PolygonMode extends Mode {
     context.arc(
       point.x,
       point.y,
-      this.brushSize - this.brushSize / 3 + 1,
+      this.brushSize / 2 - this.brushSize / 5 + 1,
       0,
       (360 * Math.PI) / 180,
       false
