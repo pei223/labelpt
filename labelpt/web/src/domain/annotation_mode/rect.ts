@@ -9,13 +9,6 @@ export class RectMode extends Mode {
   onMouseDown(x: number, y: number, label: Label): void {
     this.rectCenter = { x: x, y: y }
     this.selectedLabel = label
-    this.drawRect(
-      x,
-      y,
-      this.brushSize,
-      label,
-      this.contextSet?.highlightContext
-    )
   }
 
   onMouseMove(x: number, y: number, label: Label): void {
@@ -23,16 +16,18 @@ export class RectMode extends Mode {
     if (this.rectCenter === null) {
       if (label.isBackground()) {
         this.drawBackgroundRect(
-          x,
-          y,
+          x - this.brushSize / 2,
+          y - this.brushSize / 2,
+          this.brushSize,
           this.brushSize,
           this.contextSet?.highlightContext
         )
         return
       }
       this.drawRect(
-        x,
-        y,
+        x - this.brushSize / 2,
+        y - this.brushSize / 2,
+        this.brushSize,
         this.brushSize,
         label,
         this.contextSet?.highlightContext
@@ -44,6 +39,7 @@ export class RectMode extends Mode {
         this.rectCenter.x,
         this.rectCenter.y,
         this.calcRectWidth(x, y),
+        this.calcRectHeight(x, y),
         this.contextSet?.highlightContext
       )
       return
@@ -52,6 +48,7 @@ export class RectMode extends Mode {
       this.rectCenter.x,
       this.rectCenter.y,
       this.calcRectWidth(x, y),
+      this.calcRectHeight(x, y),
       label,
       this.contextSet?.highlightContext
     )
@@ -74,6 +71,7 @@ export class RectMode extends Mode {
       this.rectCenter.x,
       this.rectCenter.y,
       this.calcRectWidth(x, y),
+      this.calcRectHeight(x, y),
       this.selectedLabel,
       this.contextSet?.annotationContext
     )
@@ -99,6 +97,7 @@ export class RectMode extends Mode {
     x: number,
     y: number,
     width: number,
+    height: number,
     label: Label,
     context?: CanvasRenderingContext2D
   ) {
@@ -107,7 +106,7 @@ export class RectMode extends Mode {
       return
     }
     context.beginPath()
-    context.rect(x - width / 2, y - width / 2, width, width)
+    context.rect(x, y, width, height)
     context.fillStyle = label.getAnnotationRGBString()
     context.globalCompositeOperation = label.isBackground()
       ? 'destination-out'
@@ -121,6 +120,7 @@ export class RectMode extends Mode {
     x: number,
     y: number,
     width: number,
+    height: number,
     context?: CanvasRenderingContext2D
   ) {
     if (!context) {
@@ -130,7 +130,7 @@ export class RectMode extends Mode {
     context.beginPath()
     context.globalCompositeOperation = 'source-over'
     context.fillStyle = 'black'
-    context.rect(x - width / 2, y - width / 2, width, width)
+    context.rect(x, y, width, height)
     context.fill()
     context.closePath()
   }
@@ -142,6 +142,22 @@ export class RectMode extends Mode {
     const diff = Math.sqrt(
       (this.rectCenter.x - x) ** 2 + (this.rectCenter.y - y) ** 2
     )
-    return (diff * 2) / Math.sqrt(2)
+    if (x - this.rectCenter.x < 0) {
+      return -diff / Math.sqrt(2)
+    }
+    return diff / Math.sqrt(2)
+  }
+
+  private calcRectHeight(x: number, y: number): number {
+    if (this.rectCenter === null) {
+      return 0
+    }
+    const diff = Math.sqrt(
+      (this.rectCenter.x - x) ** 2 + (this.rectCenter.y - y) ** 2
+    )
+    if (y - this.rectCenter.y < 0) {
+      return -diff / Math.sqrt(2)
+    }
+    return diff / Math.sqrt(2)
   }
 }

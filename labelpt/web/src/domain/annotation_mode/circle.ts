@@ -9,13 +9,6 @@ export class CircleMode extends Mode {
   onMouseDown(x: number, y: number, label: Label): void {
     this.circleCenter = { x: x, y: y }
     this.selectedLabel = label
-    this.drawCircle(
-      x,
-      y,
-      this.brushSize,
-      label,
-      this.contextSet?.highlightContext
-    )
   }
 
   onMouseMove(x: number, y: number, label: Label): void {
