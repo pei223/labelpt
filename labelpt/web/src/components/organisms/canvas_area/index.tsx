@@ -17,6 +17,7 @@ import {
   LINE_MODE_INDEX,
 } from '../../../domain/annotation_mode/base'
 import { CircleMode } from '../../../domain/annotation_mode/circle'
+import { RectMode } from '../../../domain/annotation_mode/rect'
 
 export type CanvasAreaProps = {
   annotationManager: AnnotationManager
@@ -149,6 +150,16 @@ const CanvasArea = ({
     } else if (modeIndex === CIRCLE_MODE_INDEX) {
       annotationManager.changeMode(
         new CircleMode(
+          prevMode.contextSet,
+          prevMode.brushSize,
+          prevMode.width,
+          prevMode.height,
+          annotationManager.getImageHistoryController()
+        )
+      )
+    } else if (modeIndex === RECT_MODE_INDEX) {
+      annotationManager.changeMode(
+        new RectMode(
           prevMode.contextSet,
           prevMode.brushSize,
           prevMode.width,

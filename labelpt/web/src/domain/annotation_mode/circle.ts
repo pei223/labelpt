@@ -3,9 +3,8 @@ import Label from '../label'
 import { Mode, Point } from './base'
 
 export class CircleMode extends Mode {
-  isMouseDowning = false
-  circleCenter: Point | null = null
-  selectedLabel: Label | null = null
+  private circleCenter: Point | null = null
+  private selectedLabel: Label | null = null
 
   onMouseDown(x: number, y: number, label: Label): void {
     this.circleCenter = { x: x, y: y }
