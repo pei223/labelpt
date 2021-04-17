@@ -129,18 +129,8 @@ export class RectMode extends Mode {
     }
     context.beginPath()
     context.globalCompositeOperation = 'source-over'
-    context.fillStyle = 'white'
-    context.rect(x - width / 2, y - width / 2, width, width)
-    context.fill()
-    context.beginPath()
     context.fillStyle = 'black'
-    const innerRectWidth = width - width / 5
-    context.rect(
-      x - innerRectWidth / 2,
-      y - innerRectWidth / 2,
-      innerRectWidth,
-      innerRectWidth
-    )
+    context.rect(x - width / 2, y - width / 2, width, width)
     context.fill()
     context.closePath()
   }

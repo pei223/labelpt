@@ -122,12 +122,7 @@ export class LineMode extends Mode {
     context.beginPath()
     context.globalCompositeOperation = 'source-over'
     context.lineWidth = this.brushSize * 2
-    context.strokeStyle = 'white'
-    context.moveTo(this.lineStartPt?.x, this.lineStartPt?.y)
-    context.lineTo(x, y)
-    context.stroke()
     context.strokeStyle = 'black'
-    context.lineWidth = this.brushSize * 2 - (this.brushSize * 2) / 5
     context.moveTo(this.lineStartPt?.x, this.lineStartPt?.y)
     context.lineTo(x, y)
     context.stroke()

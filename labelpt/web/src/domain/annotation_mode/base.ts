@@ -204,12 +204,8 @@ export abstract class Mode {
     }
     context.beginPath()
     context.globalCompositeOperation = 'source-over'
-    context.fillStyle = 'white'
-    context.arc(x, y, rad, 0, (360 * Math.PI) / 180, false)
-    context.fill()
-    context.beginPath()
     context.fillStyle = 'black'
-    context.arc(x, y, rad - rad / 5 + 1, 0, (360 * Math.PI) / 180, false)
+    context.arc(x, y, rad, 0, (360 * Math.PI) / 180, false)
     context.fill()
     context.closePath()
   }
