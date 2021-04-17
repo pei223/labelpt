@@ -21,6 +21,33 @@ export const CIRCLE_MODE_INDEX = 3
 export const RECT_MODE_INDEX = 4
 export const LINE_MODE_INDEX = 5
 
+export const MODE_INFO_LIST = [
+  {
+    index: PAINT_MODE_INDEX,
+    name: 'Paint',
+  },
+  {
+    index: POLIGON_MODE_INDEX,
+    name: 'Polygon',
+  },
+  {
+    index: REGION_MODE_INDEX,
+    name: 'Region',
+  },
+  {
+    index: CIRCLE_MODE_INDEX,
+    name: 'Circle',
+  },
+  {
+    index: RECT_MODE_INDEX,
+    name: 'Rect',
+  },
+  {
+    index: LINE_MODE_INDEX,
+    name: 'Line',
+  },
+]
+
 export abstract class Mode {
   contextSet: ContextSet | null
   brushSize: number

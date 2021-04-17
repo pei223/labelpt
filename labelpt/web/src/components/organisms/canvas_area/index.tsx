@@ -15,9 +15,11 @@ import {
   CIRCLE_MODE_INDEX,
   RECT_MODE_INDEX,
   LINE_MODE_INDEX,
+  MODE_INFO_LIST,
 } from '../../../domain/annotation_mode/base'
 import { CircleMode } from '../../../domain/annotation_mode/circle'
 import { RectMode } from '../../../domain/annotation_mode/rect'
+import { LineMode } from '../../../domain/annotation_mode/line'
 
 export type CanvasAreaProps = {
   annotationManager: AnnotationManager
@@ -32,33 +34,6 @@ export type CanvasAreaProps = {
 
 const DEFAULT_BRUSH_SIZE = 10
 const DEFAULT_ALPHA = 0.5
-
-const modes = [
-  {
-    index: PAINT_MODE_INDEX,
-    name: 'Paint',
-  },
-  {
-    index: POLIGON_MODE_INDEX,
-    name: 'Polygon',
-  },
-  {
-    index: REGION_MODE_INDEX,
-    name: 'Region',
-  },
-  {
-    index: CIRCLE_MODE_INDEX,
-    name: 'Circle',
-  },
-  {
-    index: RECT_MODE_INDEX,
-    name: 'Rect',
-  },
-  {
-    index: LINE_MODE_INDEX,
-    name: 'line',
-  },
-]
 
 const CanvasArea = ({
   annotationManager,
@@ -167,6 +142,16 @@ const CanvasArea = ({
           annotationManager.getImageHistoryController()
         )
       )
+    } else if (modeIndex === LINE_MODE_INDEX) {
+      annotationManager.changeMode(
+        new LineMode(
+          prevMode.contextSet,
+          prevMode.brushSize,
+          prevMode.width,
+          prevMode.height,
+          annotationManager.getImageHistoryController()
+        )
+      )
     }
     setModeIndex(modeIndex)
   }
@@ -221,7 +206,7 @@ const CanvasArea = ({
           onBrushSizeChange={onBrushSizeChange}
           onModeIndexChange={onModeIndexChange}
           modeIndex={modeIndex}
-          modeValues={modes}
+          modeValues={MODE_INFO_LIST}
           zoomRate={zoomRate}
           onZoomIn={() => changeZoomRate(zoomRate + 0.1)}
           onZoomOut={() => changeZoomRate(zoomRate - 0.1)}
