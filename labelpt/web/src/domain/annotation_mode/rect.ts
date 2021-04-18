@@ -14,44 +14,20 @@ export class RectMode extends Mode {
   onMouseMove(x: number, y: number, label: Label): void {
     this.clearHighlight()
     if (this.rectCenter === null) {
-      if (label.isBackground()) {
-        this.drawBackgroundRect(
-          x - this.brushSize / 2,
-          y - this.brushSize / 2,
-          this.brushSize,
-          this.brushSize,
-          this.contextSet?.highlightContext
-        )
-        return
-      }
-      this.drawRect(
-        x - this.brushSize / 2,
-        y - this.brushSize / 2,
+      this.drawSquare(
+        x,
+        y,
         this.brushSize,
-        this.brushSize,
-        label,
+        label.isBackground() ? 'black' : label.getAnnotationRGBString(),
         this.contextSet?.highlightContext
       )
       return
     }
     if (label.isBackground()) {
-      this.drawBackgroundRect(
-        this.rectCenter.x,
-        this.rectCenter.y,
-        this.calcRectWidth(x, y),
-        this.calcRectHeight(x, y),
-        this.contextSet?.highlightContext
-      )
+      this.drawBackgroundRect(x, y, this.contextSet?.highlightContext)
       return
     }
-    this.drawRect(
-      this.rectCenter.x,
-      this.rectCenter.y,
-      this.calcRectWidth(x, y),
-      this.calcRectHeight(x, y),
-      label,
-      this.contextSet?.highlightContext
-    )
+    this.drawRectFromCenter(x, y, label, this.contextSet?.highlightContext)
   }
 
   onMouseUp(x: number, y: number): void {
@@ -64,14 +40,12 @@ export class RectMode extends Mode {
       return
     }
     if (this.contextSet === null) {
-      errorLog('context is null onMouseUp')
+      errorLog('Context is null.')
       return
     }
-    this.drawRect(
-      this.rectCenter.x,
-      this.rectCenter.y,
-      this.calcRectWidth(x, y),
-      this.calcRectHeight(x, y),
+    this.drawRectFromCenter(
+      x,
+      y,
       this.selectedLabel,
       this.contextSet?.annotationContext
     )
@@ -93,11 +67,9 @@ export class RectMode extends Mode {
     }
   }
 
-  private drawRect(
+  private drawRectFromCenter(
     x: number,
     y: number,
-    width: number,
-    height: number,
     label: Label,
     context?: CanvasRenderingContext2D
   ) {
@@ -105,8 +77,17 @@ export class RectMode extends Mode {
       errorLog('Context is null.')
       return
     }
+    if (this.rectCenter === null) {
+      errorLog('RectCenter is null')
+      return
+    }
     context.beginPath()
-    context.rect(x, y, width, height)
+    context.rect(
+      this.rectCenter.x,
+      this.rectCenter.y,
+      x - this.rectCenter.x,
+      y - this.rectCenter.y
+    )
     context.fillStyle = label.getAnnotationRGBString()
     context.globalCompositeOperation = label.isBackground()
       ? 'destination-out'
@@ -119,8 +100,34 @@ export class RectMode extends Mode {
   private drawBackgroundRect(
     x: number,
     y: number,
+    context?: CanvasRenderingContext2D
+  ) {
+    if (!context) {
+      errorLog('Context is null.')
+      return
+    }
+    if (this.rectCenter === null) {
+      errorLog('RectCenter is null')
+      return
+    }
+    context.beginPath()
+    context.globalCompositeOperation = 'source-over'
+    context.fillStyle = 'black'
+    context.rect(
+      this.rectCenter.x,
+      this.rectCenter.y,
+      x - this.rectCenter.x,
+      y - this.rectCenter.y
+    )
+    context.fill()
+    context.closePath()
+  }
+
+  private drawSquare(
+    x: number,
+    y: number,
     width: number,
-    height: number,
+    color: string,
     context?: CanvasRenderingContext2D
   ) {
     if (!context) {
@@ -128,36 +135,10 @@ export class RectMode extends Mode {
       return
     }
     context.beginPath()
+    context.rect(x - width / 2, y - width / 2, width, width)
     context.globalCompositeOperation = 'source-over'
-    context.fillStyle = 'black'
-    context.rect(x, y, width, height)
+    context.fillStyle = color
     context.fill()
     context.closePath()
-  }
-
-  private calcRectWidth(x: number, y: number): number {
-    if (this.rectCenter === null) {
-      return 0
-    }
-    const diff = Math.sqrt(
-      (this.rectCenter.x - x) ** 2 + (this.rectCenter.y - y) ** 2
-    )
-    if (x - this.rectCenter.x < 0) {
-      return -diff / Math.sqrt(2)
-    }
-    return diff / Math.sqrt(2)
-  }
-
-  private calcRectHeight(x: number, y: number): number {
-    if (this.rectCenter === null) {
-      return 0
-    }
-    const diff = Math.sqrt(
-      (this.rectCenter.x - x) ** 2 + (this.rectCenter.y - y) ** 2
-    )
-    if (y - this.rectCenter.y < 0) {
-      return -diff / Math.sqrt(2)
-    }
-    return diff / Math.sqrt(2)
   }
 }
