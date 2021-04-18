@@ -12,12 +12,12 @@ import {
   PAINT_MODE_INDEX,
   POLIGON_MODE_INDEX,
   REGION_MODE_INDEX,
-  CIRCLE_MODE_INDEX,
+  OVAL_MODE_INDEX,
   RECT_MODE_INDEX,
   LINE_MODE_INDEX,
   MODE_INFO_LIST,
 } from '../../../domain/annotation_mode/base'
-import { CircleMode } from '../../../domain/annotation_mode/circle'
+import { OvalMode } from '../../../domain/annotation_mode/oval'
 import { RectMode } from '../../../domain/annotation_mode/rect'
 import { LineMode } from '../../../domain/annotation_mode/line'
 
@@ -122,9 +122,9 @@ const CanvasArea = ({
           annotationManager.getImageHistoryController()
         )
       )
-    } else if (modeIndex === CIRCLE_MODE_INDEX) {
+    } else if (modeIndex === OVAL_MODE_INDEX) {
       annotationManager.changeMode(
-        new CircleMode(
+        new OvalMode(
           prevMode.contextSet,
           prevMode.brushSize,
           prevMode.width,

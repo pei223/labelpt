@@ -2,7 +2,7 @@ import { errorLog } from '../../utils/logger'
 import Label from '../label'
 import { Mode, Point } from './base'
 
-export class CircleMode extends Mode {
+export class OvalMode extends Mode {
   private circleCenter: Point | null = null
   private selectedLabel: Label | null = null
 
@@ -33,21 +33,14 @@ export class CircleMode extends Mode {
       return
     }
     if (label.isBackground()) {
-      this.drawBackgroundCircle(
-        this.circleCenter.x,
-        this.circleCenter.y,
-        this.calcDiffToCircleCenter(x, y),
+      this.drawHighlightBackgroundOvalFromCenter(
+        x,
+        y,
         this.contextSet?.highlightContext
       )
       return
     }
-    this.drawCircle(
-      this.circleCenter.x,
-      this.circleCenter.y,
-      this.calcDiffToCircleCenter(x, y),
-      label,
-      this.contextSet?.highlightContext
-    )
+    this.drawOvalFromCenter(x, y, label, this.contextSet?.highlightContext)
   }
 
   onMouseUp(x: number, y: number): void {
@@ -63,10 +56,9 @@ export class CircleMode extends Mode {
       errorLog('context is null onMouseUp')
       return
     }
-    this.drawCircle(
-      this.circleCenter.x,
-      this.circleCenter.y,
-      this.calcDiffToCircleCenter(x, y),
+    this.drawOvalFromCenter(
+      x,
+      y,
       this.selectedLabel,
       this.contextSet?.annotationContext
     )
@@ -88,12 +80,65 @@ export class CircleMode extends Mode {
     }
   }
 
-  private calcDiffToCircleCenter(x: number, y: number): number {
-    if (this.circleCenter === null) {
-      return 0
+  private drawOvalFromCenter(
+    x: number,
+    y: number,
+    label: Label,
+    context?: CanvasRenderingContext2D
+  ) {
+    if (!context) {
+      errorLog('Context is null.')
+      return
     }
-    return Math.sqrt(
-      (this.circleCenter.x - x) ** 2 + (this.circleCenter.y - y) ** 2
+    if (this.circleCenter === null) {
+      return
+    }
+    context.beginPath()
+    context.ellipse(
+      this.circleCenter.x,
+      this.circleCenter.y,
+      Math.abs(x - this.circleCenter.x),
+      Math.abs(y - this.circleCenter.y),
+      0,
+      0,
+      (360 * Math.PI) / 180,
+      false
     )
+    context.fillStyle = label.getAnnotationRGBString()
+    context.globalCompositeOperation = label.isBackground()
+      ? 'destination-out'
+      : 'source-over'
+    context.fill()
+    context.closePath()
+    context.globalCompositeOperation = 'source-over'
+  }
+
+  private drawHighlightBackgroundOvalFromCenter(
+    x: number,
+    y: number,
+    context?: CanvasRenderingContext2D
+  ) {
+    if (!context) {
+      errorLog('Context is null.')
+      return
+    }
+    if (this.circleCenter === null) {
+      return
+    }
+    context.beginPath()
+    context.ellipse(
+      this.circleCenter.x,
+      this.circleCenter.y,
+      Math.abs(x - this.circleCenter.x),
+      Math.abs(y - this.circleCenter.y),
+      0,
+      0,
+      (360 * Math.PI) / 180,
+      false
+    )
+    context.globalCompositeOperation = 'source-over'
+    context.fillStyle = 'black'
+    context.fill()
+    context.closePath()
   }
 }

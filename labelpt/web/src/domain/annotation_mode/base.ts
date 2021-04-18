@@ -17,7 +17,7 @@ export interface ContextSet {
 export const PAINT_MODE_INDEX = 0
 export const POLIGON_MODE_INDEX = 1
 export const REGION_MODE_INDEX = 2
-export const CIRCLE_MODE_INDEX = 3
+export const OVAL_MODE_INDEX = 3
 export const RECT_MODE_INDEX = 4
 export const LINE_MODE_INDEX = 5
 
@@ -35,8 +35,8 @@ export const MODE_INFO_LIST = [
     name: 'Region',
   },
   {
-    index: CIRCLE_MODE_INDEX,
-    name: 'Circle',
+    index: OVAL_MODE_INDEX,
+    name: 'Oval',
   },
   {
     index: RECT_MODE_INDEX,
