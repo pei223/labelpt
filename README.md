@@ -2,60 +2,17 @@
 
 Image segmentation annotation tool.
 
-## Using libraries
+<img src="https://raw.githubusercontent.com/pei223/labelpt/master/labelpt.png">
+<br>
 
-- Python, Eel
-- TypeScript, React
+## Functions
 
-## Setup
+- Paint mode
+- Polygon mode
+- Line/Rect/Oval mode
 
-```
-// for python
-pip install -r requirements.txt
-// for web frontend
-cd labelpt/web
-npm install
-```
-
-## Setup for develop
-
-- Apply .prettierrc.json to extension setting of Prettier plugin
-- Set true to setting of format on save
-
-## Setup storybook
+## Install
 
 ```
-cd labelpt/web
-npm run build-storybook
-npm run storybook
-```
-
-## dev run
-
-```
-// web develop build and run app.
-python dev_run.py
-// web develop build only
-python build.py -dev
-// run app only
-python run.py
-```
-
-## Build for pypi
-
-```
-python build.py
-python setup.py sdist bdist_wheel
-# check
-twine check dist/*
-# test upload
-twine upload --repository testpypi dist/*
-# upload
-twine upload dist/*
-```
-
-## Test
-
-```
-python -m unittest test
+pip install labelpt
 ```

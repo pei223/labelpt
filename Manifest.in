@@ -1,2 +1,3 @@
 include labelpt/web/build/*
-include labelpt/web/build/static/*
+include labelpt/web/build/static/css/*
+include labelpt/web/build/static/js/*
