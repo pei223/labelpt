@@ -26,7 +26,7 @@ def main():
     if is_port_used(host, port):
         messagebox.showerror("Error", f"Port {port} is not opened. \nPlease open the port.")
         return
-    eel.init(os.path.dirname(os.path.abspath(__file__)) + "/labelpt/web/build")
+    eel.init(os.path.dirname(os.path.abspath(__file__)) + "/web/build")
     eel.start("index.html", port=port)
 
 
