@@ -6,9 +6,10 @@ type Props = {
   message: string
   open: boolean
   onClose: () => void
+  hideMilliSec?: number
 }
 
-const InfoToast = ({ message, open, onClose }: Props) => {
+const InfoToast = ({ message, open, onClose, hideMilliSec = 1500 }: Props) => {
   return (
     <>
       <Snackbar
@@ -16,7 +17,7 @@ const InfoToast = ({ message, open, onClose }: Props) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        autoHideDuration={500}
+        autoHideDuration={hideMilliSec}
         open={open}
         onClose={(_, __) => onClose()}>
         <Alert severity="info" variant="filled" elevation={6}>

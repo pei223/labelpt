@@ -18,16 +18,14 @@ export class PaintMode extends Mode {
 
   onMouseMove(x: number, y: number, label: Label): void {
     this.clearHighlight()
-    if (!this.isMouseDowning) {
-      if (label.isBackground()) {
-        this.drawBackgroundCircle(
-          x,
-          y,
-          this.brushSize + 1,
-          this.contextSet?.highlightContext
-        )
-        return
-      }
+    if (label.isBackground()) {
+      this.drawBackgroundCircle(
+        x,
+        y,
+        this.brushSize + 1,
+        this.contextSet?.highlightContext
+      )
+    } else {
       this.drawCircle(
         x,
         y,
@@ -35,6 +33,8 @@ export class PaintMode extends Mode {
         label,
         this.contextSet?.highlightContext
       )
+    }
+    if (!this.isMouseDowning) {
       return
     }
     this.drawCircle(
