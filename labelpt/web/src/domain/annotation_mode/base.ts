@@ -30,10 +30,10 @@ export const MODE_INFO_LIST = [
     index: POLIGON_MODE_INDEX,
     name: 'Polygon',
   },
-  {
-    index: REGION_MODE_INDEX,
-    name: 'Region',
-  },
+  // {
+  //   index: REGION_MODE_INDEX,
+  //   name: 'Region',
+  // },
   {
     index: OVAL_MODE_INDEX,
     name: 'Oval',
