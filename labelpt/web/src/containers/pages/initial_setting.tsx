@@ -43,6 +43,7 @@ export const InitialSettingPage = () => {
   const onSubmit = async (imagesPath: string, annotationPath: string) => {
     log("State: " + state)
     if (imagesPath === "" || annotationPath === "") {
+      setErrorMessage("Directory is empty.")
       return
     }
     const isImagesPathExist = await eel.is_directory_path_exist(imagesPath)();
