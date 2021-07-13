@@ -1,9 +1,9 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography';
-import { Divider } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography'
+import { Divider } from '@material-ui/core'
 
 type Props = {
-  children: string,
+  children: string
 }
 
 const Heading = ({ children }: Props) => {
