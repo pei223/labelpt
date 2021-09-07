@@ -2,8 +2,7 @@
 
 Image segmentation annotation tool.
 
-<video src="https://raw.githubusercontent.com/pei223/labelpt/master/labelpt.mp4"  width="640" height="480" controls>
-</vide>
+![demo](https://user-images.githubusercontent.com/19645346/132349648-dd0c0975-92d0-469d-9460-8a2735e7ef41.gif)
 
 <br>
 
