@@ -2,7 +2,9 @@
 
 Image segmentation annotation tool.
 
-<img src="https://raw.githubusercontent.com/pei223/labelpt/master/labelpt.png">
+<video src="https://raw.githubusercontent.com/pei223/labelpt/master//labelpt.mp4"  width="640" height="480" controls>
+</vide>
+
 <br>
 
 ## Functions
