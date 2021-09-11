@@ -17,3 +17,9 @@ Image segmentation annotation tool.
 ```
 pip install labelpt
 ```
+
+## Usage
+Run labelpt.
+```
+labelpt
+```
